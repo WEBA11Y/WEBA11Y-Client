@@ -2,11 +2,13 @@ import { ReactElement } from "react";
 import { styled, css } from "styled-components";
 
 type Props = {
-  size?: "small" | "medium" | "large";
+  size?: "small" | "medium" | "large" | "full";
   variant?: "fill" | "outline" | "fill-outline";
   icon?: ReactElement;
   children: string;
   onClick?: () => void;
+  fullWidth?: boolean;
+  disabled?: boolean;
 };
 export default function Button({
   size = "medium",
@@ -14,20 +16,52 @@ export default function Button({
   icon,
   children,
   onClick,
+  disabled = false,
 }: Props) {
   return (
-    <StyledButton size={size} variant={variant} onClick={onClick}>
+    <StyledButton
+      size={size}
+      variant={variant}
+      onClick={onClick}
+      disabled={disabled}
+    >
       {icon && <IconWrapper>{icon}</IconWrapper>}
       {children}
     </StyledButton>
   );
 }
 
-const StyledButton = styled.button<{ size: string; variant: string }>`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
+const StyledButton = styled.button<{
+  size: string;
+  variant: string;
+  disabled: boolean;
+}>`
+  ${({ theme }) => theme.mixins.flexCenter};
+  cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
+
+  pointer-events: ${({ disabled }) => (disabled ? "none" : "auto")};
+
+  background-color: ${({ theme, disabled, variant }) =>
+    disabled
+      ? theme.colors.neutral[200]
+      : variant === "fill"
+        ? theme.colors.primary[500]
+        : theme.colors.common.white};
+
+  color: ${({ theme, disabled, variant }) =>
+    disabled
+      ? theme.colors.neutral[500]
+      : variant === "fill"
+        ? theme.colors.common.white
+        : theme.colors.primary[500]};
+
+  border: 1px solid
+    ${({ theme, disabled, variant }) =>
+      disabled
+        ? theme.colors.neutral[300]
+        : variant === "fill"
+          ? theme.colors.common.white
+          : theme.colors.primary[500]};
 
   ${(props) =>
     props.size === "small" &&
@@ -53,26 +87,24 @@ const StyledButton = styled.button<{ size: string; variant: string }>`
       ${({ theme }) => theme.typo.button.lg}
     `}
 
-  ${(props) =>
-    props.variant === "fill" &&
+    ${(props) =>
+    props.size === "full" &&
     css`
-      background-color: ${({ theme }) => theme.colors.primary[500]};
-      color: ${({ theme }) => theme.colors.common.white};
-      &:hover {
-        background-color: ${({ theme }) => theme.colors.primary[600]};
-      }
+      width: 100%;
+      padding: 15px 0;
+
+      border-radius: 10px;
+      ${({ theme }) => theme.typo.button.md}
     `}
 
-    ${(props) =>
-    props.variant === "outline" &&
-    css`
-      background-color: ${({ theme }) => theme.colors.common.white};
-      color: ${({ theme }) => theme.colors.primary[500]};
-      border: 2px solid ${({ theme }) => theme.colors.primary[500]};
-      &:hover {
-        background-color: ${({ theme }) => theme.colors.primary[100]};
-      }
-    `}
+    &:hover {
+    background-color: ${({ theme, disabled, variant }) =>
+      disabled
+        ? theme.colors.neutral[200]
+        : variant === "fill"
+          ? theme.colors.primary[600]
+          : theme.colors.primary[100]};
+  }
 `;
 
 const IconWrapper = styled.span`
