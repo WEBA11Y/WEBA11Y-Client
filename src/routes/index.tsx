@@ -18,11 +18,11 @@ const router = createBrowserRouter([
     errorElement: <NotFoundPage />,
     children: [
       {
-        path: "siginIn",
+        path: "signin",
         element: <SignInPage />,
       },
       {
-        path: "signUp",
+        path: "signup",
         element: <SignUpPage />,
       },
     ],
