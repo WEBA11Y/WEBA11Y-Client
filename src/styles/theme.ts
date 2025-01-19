@@ -164,9 +164,42 @@ const typo = {
   },
 };
 
+const mixins = {
+  flexCenter: `
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  `,
+  flexColumnCenter: `
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  `,
+  flexRowCenter: `
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  `,
+  flexRowBetween: `
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  `,
+  flexColumnBetween: `
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+  `,
+};
+
 const theme = {
   colors,
   typo,
+  mixins,
 } as const;
 
 export default theme;
