@@ -39,7 +39,7 @@ const InputContainer = styled.div`
 const StyledInput = styled.input`
   margin-top: 5px;
   padding: 12px;
-  border: 1px solid ${({ theme }) => theme.colors.primary[500]};
+  border: 1px solid ${({ theme }) => theme.colors.neutral[500]};
   border-radius: 8px;
   font-size: 12px;
 
