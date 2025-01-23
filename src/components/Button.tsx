@@ -92,7 +92,6 @@ const StyledButton = styled.button<{
     css`
       width: 100%;
       padding: 15px 0;
-
       border-radius: 10px;
       ${({ theme }) => theme.typo.button.md}
     `}

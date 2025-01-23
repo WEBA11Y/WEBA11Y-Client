@@ -6,11 +6,12 @@ import Typography from "./Typography";
 type Props = {
   name: string;
   label: string;
+  type: string;
   placeholder?: string;
   error?: FieldError;
 };
 
-export default function Input({ name, label, placeholder }: Props) {
+export default function Input({ name, type, label, placeholder }: Props) {
   const { register } = useForm<FieldValues>();
   return (
     <InputContainer>
@@ -21,7 +22,7 @@ export default function Input({ name, label, placeholder }: Props) {
       </label>
 
       <StyledInput
-        type='text'
+        type={type}
         placeholder={placeholder}
         {...register(name, { required: true })}
       />
