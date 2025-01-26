@@ -6,6 +6,8 @@ import { PATH } from "../../../constants/path";
 import Typography from "../../../components/Typography";
 import Button from "../../../components/Button";
 import Input from "../../../components/Input";
+import { useSignup } from "../hooks/useSignup";
+import { SignupFormType } from "../types/signup.d";
 
 type Props = {
   id: string;
@@ -14,10 +16,18 @@ type Props = {
 
 export default function SignupForm() {
   const navigate = useNavigate();
+  const { postSignup } = useSignup();
   const { handleSubmit } = useForm<Props>();
 
-  const onSubmit = (data: Props) => {
-    console.log(data);
+  const onSubmit = (data: SignupFormType) => {
+    postSignup.mutate(data, {
+      onSuccess: () => {
+        alert("회원가입이 완료되었습니다!");
+      },
+      onError: (error) => {
+        alert(`회원가입 중 오류가 발생했습니다: ${error.message}`);
+      },
+    });
   };
 
   return (
