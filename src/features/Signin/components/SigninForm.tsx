@@ -1,13 +1,34 @@
 import { styled } from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 import { PATH } from "../../../constants/path";
 import Typography from "../../../components/Typography";
 import Button from "../../../components/Button";
 import Input from "../../../components/Input";
+import { useSignin } from "../hooks/useSignin";
+import { SigninFormType } from "../types/signin.d";
+
+type Props = {
+  id: string;
+  password: string;
+};
 
 export default function SigninForm() {
   const navigate = useNavigate();
+  const { postSignin } = useSignin();
+  const { handleSubmit } = useForm<Props>();
+
+  const onSubmit = (data: SigninFormType) => {
+    postSignin.mutate(data, {
+      onSuccess: () => {
+        alert("로그인이 완료되었습니다!");
+      },
+      onError: (error) => {
+        alert(`로그인 중 오류가 발생했습니다: ${error.message}`);
+      },
+    });
+  };
 
   return (
     <SigninFormContainer>
@@ -19,7 +40,7 @@ export default function SigninForm() {
           더 많은 사람들과 소통하는 웹, 검수 서비스로 시작하세요.
         </Typography>
       </div>
-      <form>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Input
           type='email'
           name='id'
@@ -32,7 +53,7 @@ export default function SigninForm() {
           label='비밀번호'
           placeholder='비밀번호를 입력하세요'
         />
-        <Button variant='fill' size='full' disabled>
+        <Button variant='fill' size='full'>
           로그인
         </Button>
       </form>
