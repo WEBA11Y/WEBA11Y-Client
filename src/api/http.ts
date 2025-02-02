@@ -1,6 +1,8 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 import { Cookies } from "react-cookie";
 
+import { PATH } from "../constants/path";
+
 const cookies = new Cookies();
 
 const createClient = (config?: AxiosRequestConfig): AxiosInstance => {
@@ -42,8 +44,7 @@ const createClient = (config?: AxiosRequestConfig): AxiosInstance => {
 
           return axiosInstance(originalRequest);
         } catch (refreshError) {
-          console.error(refreshError);
-          window.location.href = "/signin";
+          window.location.href = PATH.SIGNIN;
           return Promise.reject(refreshError);
         }
       }

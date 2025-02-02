@@ -7,7 +7,6 @@ import {
 } from "react-hook-form";
 
 import Typography from "./Typography";
-import Button from "./Button";
 
 type Props<T extends FieldValues> = {
   name: Path<T>;
@@ -35,24 +34,13 @@ export default function Input<T extends FieldValues>({
           {label}
         </Typography>
       </label>
-      <div className='input-with-button'>
-        <StyledInput
-          id={name}
-          type={type}
-          placeholder={placeholder}
-          {...register(name, { required: "필수 입력 항목입니다." })}
-        />
-        {checkDuplicate && (
-          <Button
-            type='button'
-            variant='outline'
-            size='small'
-            onClick={checkDuplicate}
-          >
-            중복 확인
-          </Button>
-        )}
-      </div>
+      <StyledInput
+        id={name}
+        type={type}
+        placeholder={placeholder}
+        {...register(name, { required: "필수 입력 항목입니다." })}
+      />
+
       {error && (
         <ErrorText>
           {typeof error === "string" ? error : error.message}
@@ -67,11 +55,8 @@ const InputContainer = styled.div<{ hasButton: boolean }>`
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
-
-  .input-with-button {
-    display: flex;
-    align-items: center;
-    gap: ${({ hasButton }) => (hasButton ? "10px" : "0")};
+  label {
+    display: none;
   }
 `;
 

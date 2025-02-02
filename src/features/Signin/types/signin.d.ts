@@ -1,4 +1,4 @@
 export interface SigninFormType {
-  id: string;
+  userId: string;
   password: string;
 }
