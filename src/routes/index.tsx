@@ -5,16 +5,25 @@ import SignInPage from "../pages/SignInPage";
 import SignUpPage from "../pages/SignUpPage";
 import AuthLayout from "../layouts/AuthLayout";
 import MainLayout from "../layouts/MainLayout";
+import RootLayout from "../layouts/RootLayout";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <MainLayout />,
+    element: (
+      <RootLayout>
+        <MainLayout />
+      </RootLayout>
+    ),
     errorElement: <NotFoundPage />,
   },
   {
     path: "/auth",
-    element: <AuthLayout />,
+    element: (
+      <RootLayout>
+        <AuthLayout />
+      </RootLayout>
+    ),
     errorElement: <NotFoundPage />,
     children: [
       {

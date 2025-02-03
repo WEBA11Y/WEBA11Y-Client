@@ -1,43 +1,67 @@
 import { styled } from "styled-components";
-import { FieldError, FieldValues, useForm } from "react-hook-form";
+import {
+  FieldError,
+  FieldValues,
+  Path,
+  UseFormRegister,
+} from "react-hook-form";
 
 import Typography from "./Typography";
 
-type Props = {
-  name: string;
+type Props<T extends FieldValues> = {
+  name: Path<T>;
   label: string;
   type: string;
   placeholder?: string;
-  error?: FieldError;
+  error?: FieldError | string;
+  register: UseFormRegister<T>;
+  checkDuplicate?: () => void;
 };
 
-export default function Input({ name, type, label, placeholder }: Props) {
-  const { register } = useForm<FieldValues>();
+export default function Input<T extends FieldValues>({
+  name,
+  type,
+  label,
+  placeholder,
+  register,
+  error,
+  checkDuplicate,
+}: Props<T>) {
   return (
-    <InputContainer>
-      <label htmlFor={label}>
+    <InputContainer hasButton={!!checkDuplicate}>
+      <label htmlFor={name}>
         <Typography variant='caption' size='sm'>
           {label}
         </Typography>
       </label>
-
       <StyledInput
+        id={name}
         type={type}
         placeholder={placeholder}
-        {...register(name, { required: true })}
+        {...register(name, { required: "필수 입력 항목입니다." })}
       />
+
+      {error && (
+        <ErrorText>
+          {typeof error === "string" ? error : error.message}
+        </ErrorText>
+      )}
     </InputContainer>
   );
 }
 
-const InputContainer = styled.div`
+const InputContainer = styled.div<{ hasButton: boolean }>`
+  width: 100%;
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
+  label {
+    display: none;
+  }
 `;
 
 const StyledInput = styled.input`
-  margin-top: 5px;
+  flex: 1;
   padding: 12px;
   border: 1px solid ${({ theme }) => theme.colors.neutral[500]};
   border-radius: 8px;
@@ -49,8 +73,8 @@ const StyledInput = styled.input`
   }
 `;
 
-// const ErrorText = styled.span`
-//   margin-top: 5px;
-//   font-size: 12px;
-//   color: ${({ theme }) => theme.colors.primary[500]};
-// `;
+const ErrorText = styled.span`
+  margin-top: 5px;
+  font-size: 12px;
+  color: ${({ theme }) => theme.colors.primary[500]};
+`;

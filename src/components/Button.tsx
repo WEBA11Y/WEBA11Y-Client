@@ -4,6 +4,7 @@ import { styled, css } from "styled-components";
 type Props = {
   size?: "small" | "medium" | "large" | "full";
   variant?: "fill" | "outline" | "fill-outline";
+  type: "button" | "submit" | "reset";
   icon?: ReactElement;
   children: string;
   onClick?: () => void;
@@ -15,6 +16,7 @@ export default function Button({
   variant = "fill",
   icon,
   children,
+  type,
   onClick,
   disabled = false,
 }: Props) {
@@ -24,6 +26,7 @@ export default function Button({
       variant={variant}
       onClick={onClick}
       disabled={disabled}
+      type={type}
     >
       {icon && <IconWrapper>{icon}</IconWrapper>}
       {children}
@@ -38,7 +41,7 @@ const StyledButton = styled.button<{
 }>`
   ${({ theme }) => theme.mixins.flexCenter};
   cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
-
+  white-space: nowrap;
   pointer-events: ${({ disabled }) => (disabled ? "none" : "auto")};
 
   background-color: ${({ theme, disabled, variant }) =>
