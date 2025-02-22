@@ -7,6 +7,8 @@ import AuthLayout from "../layouts/AuthLayout";
 import MainLayout from "../layouts/MainLayout";
 import RootLayout from "../layouts/RootLayout";
 import MainPage from "../pages/MainPage";
+import ContentLayout from "../layouts/ContentLayout";
+import DetailHistory from "../pages/DetailHistory";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +42,21 @@ const router = createBrowserRouter([
       {
         path: "signup",
         element: <SignUpPage />,
+      },
+    ],
+  },
+  {
+    path: "/history",
+    element: (
+      <RootLayout>
+        <ContentLayout />
+      </RootLayout>
+    ),
+    errorElement: <NotFoundPage />,
+    children: [
+      {
+        path: ":history_id",
+        element: <DetailHistory />,
       },
     ],
   },

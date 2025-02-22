@@ -31,6 +31,7 @@ const HeaderContainer = styled.header`
   background-color: ${({ theme }) => theme.colors.white};
   display: flex;
   justify-content: space-between;
+  border-bottom: 0.5px solid ${({ theme }) => theme.colors.neutral[200]};
 `;
 
 const Logo = styled.img`
