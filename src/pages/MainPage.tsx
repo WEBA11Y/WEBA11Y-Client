@@ -1,8 +1,9 @@
 import { useForm } from "react-hook-form";
 import { styled } from "styled-components";
 
-import { Background, TitleSection, InspectionForm } from "../features/Main";
+import { TitleSection, InspectionForm } from "../features/Main";
 import { InspectionFormType } from "../features/Main/types/main";
+import Background from "../components/Background";
 
 export default function MainPage() {
   const {
@@ -13,9 +14,7 @@ export default function MainPage() {
   return (
     <MainContainer>
       <Background />
-
       <TitleSection />
-
       <InspectionForm register={register} errors={errors} />
     </MainContainer>
   );
