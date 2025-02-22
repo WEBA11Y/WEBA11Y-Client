@@ -66,7 +66,7 @@ const StyledInput = styled.input`
   border: 1px solid ${({ theme }) => theme.colors.neutral[500]};
   border-radius: 8px;
   font-size: 12px;
-
+  background-color: ${({ theme }) => theme.colors.common.white};
   &:focus {
     border-color: ${({ theme }) => theme.colors.secondary.blue[500]};
     outline: none;

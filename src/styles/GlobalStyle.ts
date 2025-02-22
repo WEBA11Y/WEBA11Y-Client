@@ -11,7 +11,7 @@ const GlobalStyle = createGlobalStyle`
     height: 100%;
     font-size: 16px;  
     font-family: 'Arial', sans-serif;  
-    background-color: ${(props) => props.theme.backgroundColor || "#ffffff"};  
+    background-color: ${(props) => props.theme.backgroundColor || "inherit"};  
     color: ${(props) => props.theme.textColor || "#000000"}; 
     line-height: 1.5;  
     -webkit-font-smoothing: antialiased;  

@@ -6,6 +6,7 @@ import SignUpPage from "../pages/SignUpPage";
 import AuthLayout from "../layouts/AuthLayout";
 import MainLayout from "../layouts/MainLayout";
 import RootLayout from "../layouts/RootLayout";
+import MainPage from "../pages/MainPage";
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,12 @@ const router = createBrowserRouter([
         <MainLayout />
       </RootLayout>
     ),
+    children: [
+      {
+        path: "/",
+        element: <MainPage />,
+      },
+    ],
     errorElement: <NotFoundPage />,
   },
   {
