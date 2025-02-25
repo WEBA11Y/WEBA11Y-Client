@@ -8,7 +8,8 @@ import MainLayout from "../layouts/MainLayout";
 import RootLayout from "../layouts/RootLayout";
 import MainPage from "../pages/MainPage";
 import ContentLayout from "../layouts/ContentLayout";
-import DetailHistory from "../pages/DetailHistory";
+import HistoryPage from "../pages/HistoryPage";
+import DetailHistoryPage from "../pages/DetailHistoryPage";
 
 const router = createBrowserRouter([
   {
@@ -20,7 +21,7 @@ const router = createBrowserRouter([
     ),
     children: [
       {
-        path: "/",
+        path: "",
         element: <MainPage />,
       },
     ],
@@ -55,8 +56,12 @@ const router = createBrowserRouter([
     errorElement: <NotFoundPage />,
     children: [
       {
+        path: "",
+        element: <HistoryPage />,
+      },
+      {
         path: ":history_id",
-        element: <DetailHistory />,
+        element: <DetailHistoryPage />,
       },
     ],
   },

@@ -249,10 +249,16 @@ const mixins = {
   `,
 };
 
+const dropbox = {
+  shadow1: "0px 1px 1px rgba(33, 37, 41, 0.06)",
+  shadow2: "0px 4px 6px rgba(33, 37, 41, 0.1)",
+};
+
 const theme = {
   colors,
   typo,
   mixins,
+  dropbox,
 } as const;
 
 export default theme;
