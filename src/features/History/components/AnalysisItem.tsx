@@ -1,8 +1,10 @@
 import { styled } from "styled-components";
+import { Link } from "react-router-dom";
 import { BsArrowUpRightCircle } from "react-icons/bs";
 import { FiCheckCircle } from "react-icons/fi";
 
 import { HistoryListData } from "../types/HistoryList";
+import { PATH } from "../../../constants/path";
 
 interface Props {
   item: HistoryListData;
@@ -20,7 +22,7 @@ export default function AnalysisItem({
   const isChecked = checkedItems.includes(id);
 
   return (
-    <ItemContainer>
+    <ItemContainer to={`${PATH.HISTORY}/${id}`}>
       <ItemLeft>
         <Logo src={logo} alt={`${name} logo`} />
         <TextContainer>
@@ -41,7 +43,7 @@ export default function AnalysisItem({
   );
 }
 
-const ItemContainer = styled.div`
+const ItemContainer = styled(Link)`
   display: flex;
   align-items: center;
   justify-content: space-between;
