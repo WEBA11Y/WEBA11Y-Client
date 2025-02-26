@@ -1,12 +1,24 @@
 import { styled } from "styled-components";
 import { BsArrowUpRightCircle } from "react-icons/bs";
+import { FiCheckCircle } from "react-icons/fi";
 
 import { HistoryListData } from "../types/HistoryList";
 
 interface Props {
   item: HistoryListData;
+  isDeleteMode: boolean;
+  checkedItems: number[];
+  onCheck: (id: number) => void;
 }
-export default function AnalysisItem({ item: { logo, name, date } }: Props) {
+
+export default function AnalysisItem({
+  item: { id, logo, name, date },
+  isDeleteMode,
+  onCheck,
+  checkedItems,
+}: Props) {
+  const isChecked = checkedItems.includes(id);
+
   return (
     <ItemContainer>
       <ItemLeft>
@@ -16,9 +28,15 @@ export default function AnalysisItem({ item: { logo, name, date } }: Props) {
           <Date>{date}</Date>
         </TextContainer>
       </ItemLeft>
-      <ExternalLink>
-        <BsArrowUpRightCircle />
-      </ExternalLink>
+      {isDeleteMode ? (
+        <CheckBox isChecked={isChecked} onClick={() => onCheck(id)}>
+          <FiCheckCircle />
+        </CheckBox>
+      ) : (
+        <ExternalLink>
+          <BsArrowUpRightCircle />
+        </ExternalLink>
+      )}
     </ItemContainer>
   );
 }
@@ -68,4 +86,10 @@ const ExternalLink = styled.button`
   font-size: 24px;
   display: flex;
   align-items: center;
+`;
+
+const CheckBox = styled.button<{ isChecked: boolean }>`
+  color: ${({ theme, isChecked }) =>
+    isChecked ? theme.colors.primary[500] : theme.colors.neutral[500]};
+  font-size: 24px;
 `;

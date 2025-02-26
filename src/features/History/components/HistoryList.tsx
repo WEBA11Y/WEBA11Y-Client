@@ -6,13 +6,27 @@ import { HistoryListData } from "../types/HistoryList";
 
 interface Props {
   historyListData: HistoryListData[];
+  isDeleteMode: boolean;
+  checkedItems: number[];
+  onCheck: (id: number) => void;
 }
-export default function HistoryList({ historyListData }: Props) {
+export default function HistoryList({
+  historyListData,
+  isDeleteMode,
+  checkedItems,
+  onCheck,
+}: Props) {
   return (
     <DropshadowCard dropshadow>
       <Container>
         {historyListData.map((item) => (
-          <AnalysisItem key={item.id} item={item} />
+          <AnalysisItem
+            key={item.id}
+            item={item}
+            isDeleteMode={isDeleteMode}
+            checkedItems={checkedItems}
+            onCheck={onCheck}
+          />
         ))}
       </Container>
     </DropshadowCard>

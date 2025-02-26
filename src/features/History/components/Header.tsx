@@ -2,10 +2,13 @@ import { styled } from "styled-components";
 
 import Button from "../../../components/Button";
 import Typography from "../../../components/Typography";
-import { useDeleteMode } from "../hooks/useDeleteMode";
 
-export default function Header() {
-  const { isDeleteMode, toggleDeleteMode } = useDeleteMode();
+interface Props {
+  mode: () => void;
+  isDeleteMode: boolean;
+}
+
+export default function Header({ mode, isDeleteMode }: Props) {
   const count = 3;
 
   return (
@@ -15,7 +18,7 @@ export default function Header() {
       </RegistrationURL>
       {isDeleteMode ? (
         <ButtonGroup>
-          <Button variant='outline' type='button' onClick={toggleDeleteMode}>
+          <Button variant='outline' type='button' onClick={mode}>
             취소
           </Button>
           <Button variant='fill' type='button'>
@@ -23,7 +26,7 @@ export default function Header() {
           </Button>
         </ButtonGroup>
       ) : (
-        <Button variant='fill' type='button' onClick={toggleDeleteMode}>
+        <Button variant='fill' type='button' onClick={mode}>
           삭제
         </Button>
       )}
