@@ -1,10 +1,9 @@
-import { Dashboard } from "../features/Detail_History";
+import DetailDashboard from "../features/DetailHistory/components/DetailDashboard";
 
 export default function DetailHistoryPage() {
   return (
     <div>
-      ㄴㄴ
-      <Dashboard />
+      <DetailDashboard />
     </div>
   );
 }
