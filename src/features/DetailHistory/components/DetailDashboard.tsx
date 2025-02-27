@@ -47,7 +47,6 @@ const TopSection = styled.div`
 
 const FlexItem = styled.div<{ ratio: number }>`
   flex: ${({ ratio }) => ratio};
-  min-width: 250px;
 `;
 
 const BottomSection = styled.div`

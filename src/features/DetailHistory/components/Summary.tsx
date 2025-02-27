@@ -8,45 +8,51 @@ import HalfCircleProgress from "../../../components/HalfCircleProgress";
 export default function Summary() {
   return (
     <DropshadowCard dropshadow>
-      <TopSection>
-        <Logo
-          src={
-            "https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg"
-          }
-          alt={`logo`}
-        />
-        <ServiceBox>
-          <Title variant='title' size='xs'>
-            웹접근성 서비스
-          </Title>
-          <Link variant='text' size='mdRegular'>
-            서비스 링크 <BsBoxArrowUpRight />
-          </Link>
-        </ServiceBox>
-      </TopSection>
-      <BottomSection>
-        <HalfCircleProgress
-          label='실패'
-          value={8}
-          total={20}
-          color={"#E63946"}
-        />
-        <HalfCircleProgress
-          label='검토'
-          value={8}
-          total={20}
-          color={"#FFC947"}
-        />
-        <HalfCircleProgress
-          label='권장'
-          value={8}
-          total={20}
-          color={"#2A6F97"}
-        />
-      </BottomSection>
+      <Container>
+        <TopSection>
+          <Logo
+            src={
+              "https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg"
+            }
+            alt={`logo`}
+          />
+          <ServiceBox>
+            <Title variant='title' size='xs'>
+              웹접근성 서비스
+            </Title>
+            <Link variant='text' size='mdRegular'>
+              서비스 링크 <BsBoxArrowUpRight />
+            </Link>
+          </ServiceBox>
+        </TopSection>
+        <BottomSection>
+          <HalfCircleProgress
+            label='실패'
+            value={8}
+            total={20}
+            color={"#E63946"}
+          />
+          <HalfCircleProgress
+            label='검토'
+            value={8}
+            total={20}
+            color={"#FFC947"}
+          />
+          <HalfCircleProgress
+            label='권장'
+            value={8}
+            total={20}
+            color={"#2A6F97"}
+          />
+        </BottomSection>
+      </Container>
     </DropshadowCard>
   );
 }
+
+const Container = styled.div`
+  height: 250px;
+`;
 
 const Logo = styled.img`
   width: 48px;
