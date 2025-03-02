@@ -18,9 +18,15 @@
   ],
   "plugins": ["react", "react-hooks", "jsx-a11y", "@typescript-eslint", "prettier"],
   "settings": {
+    "import/resolver": {
+      "typescript": {
+        "alwaysTryTypes": true
+      }
+    },
     "import/parsers": {
       "@typescript-eslint/parser": [".ts", ".tsx"]
     }
+    
   },
   "rules": {
     "@typescript-eslint/naming-convention": [

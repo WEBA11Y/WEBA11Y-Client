@@ -3,7 +3,7 @@ import { styled, css } from "styled-components";
 
 type Props = {
   size?: "small" | "medium" | "large" | "full";
-  variant?: "fill" | "outline" | "fill-outline";
+  variant?: "fill" | "outline" | "fill-outline" | "darkFill";
   type: "button" | "submit" | "reset";
   icon?: ReactElement;
   children: string;
@@ -49,14 +49,18 @@ const StyledButton = styled.button<{
       ? theme.colors.neutral[200]
       : variant === "fill"
         ? theme.colors.primary[500]
-        : theme.colors.common.white};
+        : variant === "darkFill"
+          ? theme.colors.common.black
+          : theme.colors.common.white};
 
   color: ${({ theme, disabled, variant }) =>
     disabled
       ? theme.colors.neutral[500]
       : variant === "fill"
         ? theme.colors.common.white
-        : theme.colors.primary[500]};
+        : variant === "darkFill"
+          ? theme.colors.common.white
+          : theme.colors.primary[500]};
 
   border: 1px solid
     ${({ theme, disabled, variant }) =>
@@ -64,7 +68,9 @@ const StyledButton = styled.button<{
         ? theme.colors.neutral[300]
         : variant === "fill"
           ? theme.colors.common.white
-          : theme.colors.primary[500]};
+          : variant === "darkFill"
+            ? theme.colors.common.black
+            : theme.colors.primary[500]};
 
   ${(props) =>
     props.size === "small" &&
@@ -105,7 +111,9 @@ const StyledButton = styled.button<{
         ? theme.colors.neutral[200]
         : variant === "fill"
           ? theme.colors.primary[600]
-          : theme.colors.primary[100]};
+          : variant === "darkFill"
+            ? theme.colors.common.black
+            : theme.colors.primary[100]};
   }
 `;
 

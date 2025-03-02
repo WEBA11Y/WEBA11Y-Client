@@ -58,9 +58,19 @@ const typo = {
       fontWeight: 600,
       lineHeight: "56px",
     },
-    md: {
+    mdBold: {
       fontSize: "36px",
       fontWeight: 600,
+      lineHeight: "44px",
+    },
+    md: {
+      fontSize: "36px",
+      fontWeight: 500,
+      lineHeight: "44px",
+    },
+    mdRegular: {
+      fontSize: "36px",
+      fontWeight: 400,
       lineHeight: "44px",
     },
     sm: {
@@ -80,7 +90,17 @@ const typo = {
       fontWeight: 600,
       lineHeight: "28px",
     },
+    mdBold: {
+      fontSize: "16px",
+      fontWeight: 600,
+      lineHeight: "24px",
+    },
     md: {
+      fontSize: "16px",
+      fontWeight: 500,
+      lineHeight: "24px",
+    },
+    mdRegular: {
       fontSize: "16px",
       fontWeight: 400,
       lineHeight: "24px",
@@ -102,11 +122,22 @@ const typo = {
       fontWeight: 700,
       lineHeight: "20px",
     },
-    md: {
+    mdBold: {
       fontSize: "14px",
       fontWeight: 600,
       lineHeight: "18px",
     },
+    md: {
+      fontSize: "14px",
+      fontWeight: 500,
+      lineHeight: "18px",
+    },
+    mdRegular: {
+      fontSize: "14px",
+      fontWeight: 400,
+      lineHeight: "18px",
+    },
+
     sm: {
       fontSize: "12px",
       fontWeight: 600,
@@ -124,11 +155,22 @@ const typo = {
       fontWeight: 400,
       lineHeight: "20px",
     },
+    mdBold: {
+      fontSize: "12px",
+      fontWeight: 600,
+      lineHeight: "16px",
+    },
     md: {
+      fontSize: "12px",
+      fontWeight: 500,
+      lineHeight: "16px",
+    },
+    mdRegular: {
       fontSize: "12px",
       fontWeight: 400,
       lineHeight: "16px",
     },
+
     sm: {
       fontSize: "10px",
       fontWeight: 400,
@@ -146,11 +188,22 @@ const typo = {
       fontWeight: 700,
       lineHeight: "16px",
     },
-    md: {
+    mdBold: {
       fontSize: "10px",
-      fontWeight: 700,
+      fontWeight: 600,
       lineHeight: "14px",
     },
+    md: {
+      fontSize: "10px",
+      fontWeight: 500,
+      lineHeight: "14px",
+    },
+    mdRegular: {
+      fontSize: "10px",
+      fontWeight: 400,
+      lineHeight: "14px",
+    },
+
     sm: {
       fontSize: "8px",
       fontWeight: 700,
@@ -196,10 +249,16 @@ const mixins = {
   `,
 };
 
+const dropbox = {
+  shadow1: "0px 1px 1px rgba(33, 37, 41, 0.06)",
+  shadow2: "0px 4px 6px rgba(33, 37, 41, 0.1)",
+};
+
 const theme = {
   colors,
   typo,
   mixins,
+  dropbox,
 } as const;
 
 export default theme;

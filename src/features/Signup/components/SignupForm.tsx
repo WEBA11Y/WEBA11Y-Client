@@ -107,15 +107,6 @@ export default function SignupForm() {
   };
 
   const onSubmit = (data: SignupFormType) => {
-    if (!isUserIdChecked) {
-      alert("아이디 중복확인을 해주세요.");
-      return;
-    }
-    if (!isPhoneChecked) {
-      alert("전화번호 중복확인을 해주세요.");
-      return;
-    }
-
     if (!/^(?=.*[a-zA-Z])(?=.*\d)[A-Za-z\d]{8,16}$/.test(password)) {
       setError("password", {
         type: "manual",
