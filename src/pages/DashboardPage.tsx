@@ -14,6 +14,7 @@ export default function Dashboard() {
     <Container>
       <RecentInspectionResult />
       <MainContent>
+        test3
         <LeftSection>
           <Summary />
           <ResolutionChart />
