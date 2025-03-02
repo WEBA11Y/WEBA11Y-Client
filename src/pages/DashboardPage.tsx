@@ -12,7 +12,7 @@ import {
 export default function Dashboard() {
   return (
     <Container>
-      test
+      test2
       <RecentInspectionResult />
       <MainContent>
         <LeftSection>
