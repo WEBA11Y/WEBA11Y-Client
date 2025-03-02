@@ -44,9 +44,15 @@ export default function HalfCircleProgress({
         <Typography variant='text' size='mdBold'>
           {label}
         </Typography>
-        <Typography variant='text' size='lg'>
-          {`${value}/${total}`}
-        </Typography>
+        <Result>
+          <Typography variant='text' size='lg'>
+            {`${value}`}
+          </Typography>
+          /
+          <Total variant='text' size='md'>
+            {`${total}`}
+          </Total>
+        </Result>
       </TextContainer>
     </Container>
   );
@@ -64,4 +70,14 @@ const TextContainer = styled.div`
   top: 50%;
   transform: translateY(-50%);
   text-align: center;
+`;
+
+const Result = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 2px;
+`;
+
+const Total = styled.div`
+  color: ${({ theme }) => theme.colors.neutral[600]};
 `;

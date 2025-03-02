@@ -34,6 +34,9 @@ export default function DetailDashboard() {
 }
 
 const Container = styled.div`
+  width: 100%;
+  max-width: 1020px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 15px;

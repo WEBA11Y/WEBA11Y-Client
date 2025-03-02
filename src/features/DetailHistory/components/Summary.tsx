@@ -16,14 +16,14 @@ export default function Summary() {
             }
             alt={`logo`}
           />
-          <ServiceBox>
+          <ServiceInfo>
             <Title variant='title' size='xs'>
               웹접근성 서비스
             </Title>
             <Link variant='text' size='mdRegular'>
               서비스 링크 <BsBoxArrowUpRight />
             </Link>
-          </ServiceBox>
+          </ServiceInfo>
         </TopSection>
         <BottomSection>
           <HalfCircleProgress
@@ -61,7 +61,8 @@ const Logo = styled.img`
   background-color: ${({ theme }) => theme.colors.neutral[100]};
 `;
 
-const ServiceBox = styled.div``;
+const ServiceInfo = styled.div``;
+
 const Title = styled(Typography)``;
 const Link = styled(Typography)`
   display: flex;

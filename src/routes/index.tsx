@@ -10,6 +10,8 @@ import MainPage from "../pages/MainPage";
 import ContentLayout from "../layouts/ContentLayout";
 import HistoryPage from "../pages/HistoryPage";
 import DetailHistoryPage from "../pages/DetailHistoryPage";
+import DashboardPage from "../pages/DashboardPage";
+import { PATH } from "../constants/path";
 
 const router = createBrowserRouter([
   {
@@ -62,6 +64,21 @@ const router = createBrowserRouter([
       {
         path: ":history_id",
         element: <DetailHistoryPage />,
+      },
+    ],
+  },
+  {
+    path: PATH.DASHBOARD,
+    element: (
+      <RootLayout>
+        <ContentLayout />
+      </RootLayout>
+    ),
+    errorElement: <NotFoundPage />,
+    children: [
+      {
+        path: "",
+        element: <DashboardPage />,
       },
     ],
   },
