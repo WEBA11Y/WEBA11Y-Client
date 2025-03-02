@@ -12,6 +12,7 @@ import {
 export default function Dashboard() {
   return (
     <Container>
+      test
       <RecentInspectionResult />
       <MainContent>
         <LeftSection>
