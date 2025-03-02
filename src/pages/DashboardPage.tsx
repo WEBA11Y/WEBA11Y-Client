@@ -17,6 +17,7 @@ export default function Dashboard() {
       <MainContent>
         test3
         <LeftSection>
+          test4
           <Summary />
           <ResolutionChart />
           <ImportantIssues />
