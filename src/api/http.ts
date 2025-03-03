@@ -1,59 +1,41 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
-import { Cookies } from "react-cookie";
+import axios from "axios";
 
-import { PATH } from "../constants/path";
+const httpClient = axios.create({
+  baseURL: import.meta.env.VITE_BASE_URL,
+  timeout: 1000,
+  withCredentials: true,
+  headers: { "Content-Type": "application/json" },
+});
 
-const cookies = new Cookies();
+httpClient.interceptors.request.use(
+  (req) => {
+    return req;
+  },
+  (error) => {
+    Promise.reject(error);
+  }
+);
 
-const createClient = (config?: AxiosRequestConfig): AxiosInstance => {
-  const axiosInstance = axios.create({
-    baseURL: import.meta.env.VITE_BASE_URL,
-    timeout: 1000,
-    withCredentials: true,
-    headers: {
-      "Content-Type": "application/json",
-    },
-    ...config,
-  });
+httpClient.interceptors.response.use(
+  (res) => res,
+  (error) => {
+    const originalReq = error.config;
+    if (error.response?.status === 401 && !originalReq._retry) {
+      originalReq._retry = true;
 
-  axiosInstance.interceptors.request.use(
-    (req) => {
-      const accessToken = cookies.get("accessToken");
-      if (accessToken) {
-        req.headers.Authorization = `Bearer ${accessToken}`;
+      try {
+        axios.post(
+          `${import.meta.env.VITE_BASE_URL}/api/v1/reissuing-token`,
+          {},
+          { withCredentials: true }
+        );
+        return httpClient(originalReq);
+      } catch (error) {
+        return Promise.reject(error);
       }
-      return req;
-    },
-    (error) => Promise.reject(error)
-  );
-
-  axiosInstance.interceptors.response.use(
-    (response) => response,
-    async (error) => {
-      const originalRequest = error.config;
-
-      if (error.response?.status === 401 && !originalRequest._retry) {
-        originalRequest._retry = true;
-
-        try {
-          const { data } = await axios.post(" ", {}, { withCredentials: true });
-
-          const newAccessToken = data.accessToken;
-
-          originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-
-          return axiosInstance(originalRequest);
-        } catch (refreshError) {
-          window.location.href = PATH.SIGNIN;
-          return Promise.reject(refreshError);
-        }
-      }
-
-      return Promise.reject(error);
     }
-  );
+    return Promise.reject(error);
+  }
+);
 
-  return axiosInstance;
-};
-
-export const httpClient = createClient();
+export default httpClient;
