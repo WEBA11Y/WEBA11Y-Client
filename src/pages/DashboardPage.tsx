@@ -12,12 +12,9 @@ import {
 export default function Dashboard() {
   return (
     <Container>
-      test2
       <RecentInspectionResult />
       <MainContent>
-        test3
         <LeftSection>
-          test4
           <Summary />
           <ResolutionChart />
           <ImportantIssues />

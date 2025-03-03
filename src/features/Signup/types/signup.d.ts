@@ -1,7 +1,7 @@
 export type SignupFormType = {
-  username: string;
+  name: string;
   userId: string;
   password: string;
   birthday: string;
-  phone: string;
+  phoneNum: string;
 };

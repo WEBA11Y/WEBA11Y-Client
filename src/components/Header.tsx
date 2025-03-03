@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import LogoImage from "../assets/logo/logo.svg";
 import Button from "./Button";
 import { PATH } from "../constants/path";
+import Typography from "./Typography";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -19,7 +20,9 @@ export default function Header() {
           navigate(PATH.SIGNIN);
         }}
       >
-        LOGIN
+        <Typography variant='button' size='mdBold'>
+          LOGIN
+        </Typography>
       </Button>
     </HeaderContainer>
   );
