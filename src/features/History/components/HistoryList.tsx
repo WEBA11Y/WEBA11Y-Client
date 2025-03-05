@@ -3,6 +3,7 @@ import { styled } from "styled-components";
 import DropshadowCard from "../../../components/DropshadowCard";
 import AnalysisItem from "./AnalysisItem";
 import { HistoryListData } from "../types/HistoryList";
+import { useUrls } from "../hooks/useUrls";
 
 interface Props {
   historyListData: HistoryListData[];
@@ -16,6 +17,8 @@ export default function HistoryList({
   checkedItems,
   onCheck,
 }: Props) {
+  const { data } = useUrls();
+  console.log(data);
   return (
     <DropshadowCard dropshadow>
       <Container>
