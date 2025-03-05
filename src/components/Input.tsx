@@ -28,7 +28,7 @@ export default function Input<T extends FieldValues>({
   checkDuplicate,
 }: Props<T>) {
   return (
-    <InputContainer hasButton={!!checkDuplicate}>
+    <InputContainer $hasButton={!!checkDuplicate}>
       <label htmlFor={name}>
         <Typography variant='caption' size='sm'>
           {label}
@@ -50,7 +50,7 @@ export default function Input<T extends FieldValues>({
   );
 }
 
-const InputContainer = styled.div<{ hasButton: boolean }>`
+const InputContainer = styled.div<{ $hasButton: boolean }>`
   width: 100%;
   display: flex;
   flex-direction: column;

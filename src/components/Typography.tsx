@@ -17,8 +17,8 @@ export default function Typography({
 }: Props & { className?: string }) {
   return (
     <StyledTypography
-      variant={variant}
-      size={size}
+      $variant={variant}
+      $size={size}
       as={as}
       className={className}
     >
@@ -27,10 +27,13 @@ export default function Typography({
   );
 }
 
-const StyledTypography = styled.div<Omit<Props, "children" | "as">>`
-  ${({ variant = "text", size = "md" }) => `
-    font-size:${theme.typo[variant][size].fontSize};
-    font-weight:${theme.typo[variant][size].fontWeight};
-    line-height:${theme.typo[variant][size].lineHeight};   
+const StyledTypography = styled.div<{
+  $variant: Props["variant"];
+  $size?: Props["size"];
+}>`
+  ${({ $variant = "text", $size = "md" }) => `
+    font-size:${theme.typo[$variant][$size].fontSize};
+    font-weight:${theme.typo[$variant][$size].fontWeight};
+    line-height:${theme.typo[$variant][$size].lineHeight};   
 `}
 `;
