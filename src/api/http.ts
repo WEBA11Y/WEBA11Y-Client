@@ -8,11 +8,15 @@ const httpClient = axios.create({
 });
 
 httpClient.interceptors.request.use(
-  (req) => {
-    return req;
+  (config) => {
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
   },
   (error) => {
-    Promise.reject(error);
+    return Promise.reject(error);
   }
 );
 
