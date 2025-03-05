@@ -12,10 +12,8 @@ import {
 export default function Dashboard() {
   return (
     <Container>
-      test2
       <RecentInspectionResult />
       <MainContent>
-        test3
         <LeftSection>
           <Summary />
           <ResolutionChart />

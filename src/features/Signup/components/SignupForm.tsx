@@ -30,10 +30,10 @@ export default function SignupForm() {
   const [isUserIdChecked, setIsUserIdChecked] = useState(false);
   const [isPhoneChecked, setIsPhoneChecked] = useState(false);
 
-  const username = watch("username");
+  const username = watch("name");
   const userId = watch("userId");
   const password = watch("password");
-  const phone = watch("phone");
+  const phone = watch("phoneNum");
 
   const isFormValid =
     username?.trim() !== "" &&
@@ -59,16 +59,17 @@ export default function SignupForm() {
     userIdCheck.mutate(
       { value: userId, type: "userId" },
       {
-        onSuccess: (data) => {
-          if (data.isDuplicate) {
+        onSuccess: () => {
+          clearErrors("userId");
+          setIsUserIdChecked(true);
+        },
+        onError: (error) => {
+          if (error?.response?.status === 409) {
             setError("userId", {
               type: "manual",
               message: "이미 사용 중인 아이디입니다.",
             });
             setIsUserIdChecked(false);
-          } else {
-            clearErrors("userId");
-            setIsUserIdChecked(true);
           }
         },
       }
@@ -76,11 +77,11 @@ export default function SignupForm() {
   };
 
   const handleCheckPhone = () => {
-    const phone = getValues("phone");
+    const phone = getValues("phoneNum");
     if (!phone) return;
 
     if (!/^\d{10,11}$/.test(phone)) {
-      setError("phone", {
+      setError("phoneNum", {
         type: "manual",
         message: "숫자로만 이루어진 10~11자리여야 합니다.",
       });
@@ -90,16 +91,18 @@ export default function SignupForm() {
     phoneCheck.mutate(
       { value: phone, type: "phone" },
       {
-        onSuccess: (data) => {
-          if (data.isDuplicate) {
-            setError("phone", {
+        onSuccess: () => {
+          clearErrors("phoneNum");
+          setIsPhoneChecked(true);
+        },
+        onError: (error: Error) => {
+          console.log(error);
+          if (error?.response?.status === 409) {
+            setError("phoneNum", {
               type: "manual",
               message: "이미 사용 중인 전화번호입니다.",
             });
             setIsPhoneChecked(false);
-          } else {
-            clearErrors("phone");
-            setIsPhoneChecked(true);
           }
         },
       }
@@ -135,11 +138,11 @@ export default function SignupForm() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <Input
           type='text'
-          name='username'
+          name='name'
           label='이름'
           placeholder='이름'
           register={register}
-          error={errors.username?.message}
+          error={errors.name?.message}
         />
 
         <div className='input-with-button'>
@@ -169,16 +172,23 @@ export default function SignupForm() {
           register={register}
           error={errors.password?.message}
         />
-
+        <Input
+          type='date'
+          name='birthday'
+          label='생년월일'
+          register={register}
+          error={errors.birthday?.message}
+        />
         <div className='input-with-button'>
           <Input
             type='text'
-            name='phone'
+            name='phoneNum'
             label='전화번호'
             placeholder='전화번호 '
             register={register}
-            error={errors.phone?.message}
+            error={errors.phoneNum?.message}
           />
+
           <Button
             type='button'
             variant='outline'
@@ -204,7 +214,7 @@ export default function SignupForm() {
           이미 계정이 있으신가요?
         </Typography>
         <button type='button' onClick={() => navigate(PATH.SIGNIN)}>
-          <Typography variant='button' size='sm'>
+          <Typography variant='button' size='mdBold'>
             로그인하기
           </Typography>
         </button>

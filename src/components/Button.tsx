@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { ReactElement, ReactNode } from "react";
 import { styled, css } from "styled-components";
 
 type Props = {
@@ -6,7 +6,7 @@ type Props = {
   variant?: "fill" | "outline" | "fill-outline" | "darkFill";
   type: "button" | "submit" | "reset";
   icon?: ReactElement;
-  children: string;
+  children: ReactNode;
   onClick?: () => void;
   fullWidth?: boolean;
   disabled?: boolean;

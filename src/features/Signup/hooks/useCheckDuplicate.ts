@@ -16,7 +16,6 @@ const checkDuplicate = async ({
 }: CheckDuplicateParams): Promise<CheckDuplicateResponse> => {
   const response =
     await axios.get(`http://localhost:8080/api/v1/join/check-${type}?${type}=${value}
-
 `);
 
   return response.data;
