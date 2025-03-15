@@ -11,6 +11,7 @@ type Props = {
   fullWidth?: boolean;
   disabled?: boolean;
 };
+
 export default function Button({
   size = "medium",
   variant = "fill",
@@ -22,8 +23,8 @@ export default function Button({
 }: Props) {
   return (
     <StyledButton
-      size={size}
-      variant={variant}
+      $size={size}
+      $variant={variant}
       onClick={onClick}
       disabled={disabled}
       type={type}
@@ -35,8 +36,8 @@ export default function Button({
 }
 
 const StyledButton = styled.button<{
-  size: string;
-  variant: string;
+  $size: string;
+  $variant: string;
   disabled: boolean;
 }>`
   ${({ theme }) => theme.mixins.flexCenter};
@@ -44,36 +45,36 @@ const StyledButton = styled.button<{
   white-space: nowrap;
   pointer-events: ${({ disabled }) => (disabled ? "none" : "auto")};
 
-  background-color: ${({ theme, disabled, variant }) =>
+  background-color: ${({ theme, disabled, $variant }) =>
     disabled
       ? theme.colors.neutral[200]
-      : variant === "fill"
+      : $variant === "fill"
         ? theme.colors.primary[500]
-        : variant === "darkFill"
+        : $variant === "darkFill"
           ? theme.colors.common.black
           : theme.colors.common.white};
 
-  color: ${({ theme, disabled, variant }) =>
+  color: ${({ theme, disabled, $variant }) =>
     disabled
       ? theme.colors.neutral[500]
-      : variant === "fill"
+      : $variant === "fill"
         ? theme.colors.common.white
-        : variant === "darkFill"
+        : $variant === "darkFill"
           ? theme.colors.common.white
           : theme.colors.primary[500]};
 
   border: 1px solid
-    ${({ theme, disabled, variant }) =>
+    ${({ theme, disabled, $variant }) =>
       disabled
         ? theme.colors.neutral[300]
-        : variant === "fill"
+        : $variant === "fill"
           ? theme.colors.common.white
-          : variant === "darkFill"
+          : $variant === "darkFill"
             ? theme.colors.common.black
             : theme.colors.primary[500]};
 
   ${(props) =>
-    props.size === "small" &&
+    props.$size === "small" &&
     css`
       padding: 4px 8px;
       border-radius: 20px;
@@ -81,7 +82,7 @@ const StyledButton = styled.button<{
     `}
 
   ${(props) =>
-    props.size === "medium" &&
+    props.$size === "medium" &&
     css`
       padding: 8px 16px;
       border-radius: 25px;
@@ -89,7 +90,7 @@ const StyledButton = styled.button<{
     `}
 
     ${(props) =>
-    props.size === "large" &&
+    props.$size === "large" &&
     css`
       padding: 12px 20px;
       border-radius: 30px;
@@ -97,7 +98,7 @@ const StyledButton = styled.button<{
     `}
 
     ${(props) =>
-    props.size === "full" &&
+    props.$size === "full" &&
     css`
       width: 100%;
       padding: 15px 0;
@@ -106,12 +107,12 @@ const StyledButton = styled.button<{
     `}
 
     &:hover {
-    background-color: ${({ theme, disabled, variant }) =>
+    background-color: ${({ theme, disabled, $variant }) =>
       disabled
         ? theme.colors.neutral[200]
-        : variant === "fill"
+        : $variant === "fill"
           ? theme.colors.primary[600]
-          : variant === "darkFill"
+          : $variant === "darkFill"
             ? theme.colors.common.black
             : theme.colors.primary[100]};
   }
