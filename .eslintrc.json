@@ -14,7 +14,9 @@
     "plugin:import/recommended",
     "plugin:import/typescript",
     "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",   
+   "plugin:@tanstack/eslint-plugin-query/recommended"
+
   ],
   "plugins": ["react", "react-hooks", "jsx-a11y", "@typescript-eslint", "prettier"],
   "settings": {
@@ -63,7 +65,10 @@
           "match": false
         }
       }
-    ],
+    ],  
+     "@tanstack/query/exhaustive-deps": "error",
+    "@tanstack/query/stable-query-client": "error",
+     "@tanstack/query/no-rest-destructuring": "warn",
     "no-console": "warn",
     "react-hooks/exhaustive-deps": "warn",
     "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
