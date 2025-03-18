@@ -1,5 +1,6 @@
 interface ImportMetaEnv {
   VITE_BASE_URL: string | undefined;
+  VITE_SENTRY_DSN: string;
   readonly VITE_SUPABASE_KEY: string;
   readonly VITE_API_KEY: string;
 }

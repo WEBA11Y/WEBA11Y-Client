@@ -63,8 +63,10 @@ export default function SignupForm() {
           clearErrors("userId");
           setIsUserIdChecked(true);
         },
-        onError: (error) => {
-          if (error?.response?.status === 409) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        onError: (error: any) => {
+          const statusCode = error.response.status;
+          if (statusCode === 409) {
             setError("userId", {
               type: "manual",
               message: "이미 사용 중인 아이디입니다.",
@@ -95,9 +97,10 @@ export default function SignupForm() {
           clearErrors("phoneNum");
           setIsPhoneChecked(true);
         },
-        onError: (error: Error) => {
-          console.log(error);
-          if (error?.response?.status === 409) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        onError: (error: any) => {
+          const statusCode = error.response.status;
+          if (statusCode === 409) {
             setError("phoneNum", {
               type: "manual",
               message: "이미 사용 중인 전화번호입니다.",
