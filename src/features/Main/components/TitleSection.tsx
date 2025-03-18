@@ -5,7 +5,7 @@ import Typography from "../../../components/Typography";
 export default function TitleSection() {
   return (
     <TitleContainer>
-      <Typography variant='title' size='mdBold' color='neutral900'>
+      <Typography variant='title' size='mdBold'>
         모든 사용자를 위한 웹
       </Typography>
       <Typography variant='title' size='mdRegular'>
