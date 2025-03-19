@@ -7,9 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "prepare": "husky install",
-    "dev:sentry": "npm run build && npx sentry-cli releases new $(git rev-parse HEAD) && npx sentry-cli releases set-commits --auto $(git rev-parse HEAD) && npx sentry-cli releases files $(git rev-parse HEAD) upload-sourcemaps ./dist && npx sentry-cli releases finalize $(git rev-parse HEAD) && npm run dev"
-
+    "prepare": "husky install"
+ 
   },
   "dependencies": {
     "@sentry/react": "^9.6.0",

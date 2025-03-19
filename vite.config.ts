@@ -6,6 +6,7 @@ export default () => {
   return defineConfig({
     plugins: [
       react(),
+      //  Vite 빌드 시 Sentry에 자동으로 소스맵 업로드용
       sentryVitePlugin({
         authToken: process.env.SENTRY_AUTH_TOKEN,
         org: "weba11y",
