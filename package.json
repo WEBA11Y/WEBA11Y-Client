@@ -8,11 +8,11 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "prepare": "husky install"
+ 
   },
   "dependencies": {
-    "@sentry/react": "^9.5.0",
+    "@sentry/react": "^9.6.0",
     "@sentry/tracing": "^7.120.3",
-    "@sentry/vite-plugin": "^3.2.2",
     "@tanstack/react-query": "^5.64.2",
     "@tanstack/react-query-devtools": "^5.68.0",
     "axios": "^1.7.9",
@@ -28,6 +28,7 @@
     "zustand": "^5.0.3"
   },
   "devDependencies": {
+    "@sentry/vite-plugin": "^3.2.2",
     "@tanstack/eslint-plugin-query": "^5.68.0",
     "@types/node": "^22.13.5",
     "@types/react": "^18.3.18",
