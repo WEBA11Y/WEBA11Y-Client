@@ -12,6 +12,13 @@ export default function App() {
       <ThemeProvider theme={theme}>
         <GlobalStyle />
         <Router />
+        <button
+          onClick={() => {
+            throw new Error("This is your first error!");
+          }}
+        >
+          Break the world
+        </button>
       </ThemeProvider>
     </QueryClientProvider>
   );

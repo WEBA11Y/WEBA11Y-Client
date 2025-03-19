@@ -67,3 +67,15 @@ jobs:
         run: |
           aws cloudfront create-invalidation \
             --distribution-id $CLOUD_FRONT_ID --paths /*
+
+      - name: Upload source maps to Sentry
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: "webA11y"
+          SENTRY_PROJECT: "weba11y"
+          SENTRY_RELEASE: ${{ env.SENTRY_RELEASE }}
+        run: |
+          npx sentry-cli releases new $SENTRY_RELEASE
+          npx sentry-cli releases set-commits --auto $SENTRY_RELEASE
+          npx sentry-cli releases files $SENTRY_RELEASE upload-sourcemaps ./dist
+          npx sentry-cli releases finalize $SENTRY_RELEASE
