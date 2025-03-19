@@ -68,6 +68,9 @@ jobs:
           aws cloudfront create-invalidation \
             --distribution-id $CLOUD_FRONT_ID --paths /*
 
+      - name: Set Sentry Release Version
+        run: echo "SENTRY_RELEASE=${{ github.sha }}" >> $GITHUB_ENV
+
       - name: Upload source maps to Sentry
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
