@@ -1,4 +1,8 @@
+import { Suspense } from "react";
+
 import Header from "../components/Header";
+import Loading from "../components/Loading";
+import RootErrorBoundary from "../components/RootErrorBoundary";
 
 export default function RootLayout({
   children,
@@ -8,7 +12,9 @@ export default function RootLayout({
   return (
     <div>
       <Header />
-      {children}
+      <RootErrorBoundary>
+        <Suspense fallback={<Loading />}>{children}</Suspense>
+      </RootErrorBoundary>
     </div>
   );
 }

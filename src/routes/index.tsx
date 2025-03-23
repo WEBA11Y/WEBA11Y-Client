@@ -1,6 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import NotFoundPage from "../pages/NotFoundPage";
 import SignInPage from "../pages/SignInPage";
 import SignUpPage from "../pages/SignUpPage";
 import AuthLayout from "../layouts/AuthLayout";
@@ -21,13 +20,13 @@ const router = createBrowserRouter([
         <MainLayout />
       </RootLayout>
     ),
+
     children: [
       {
         path: "",
         element: <MainPage />,
       },
     ],
-    errorElement: <NotFoundPage />,
   },
   {
     path: "/auth",
@@ -36,7 +35,6 @@ const router = createBrowserRouter([
         <AuthLayout />
       </RootLayout>
     ),
-    errorElement: <NotFoundPage />,
     children: [
       {
         path: "signin",
@@ -55,7 +53,6 @@ const router = createBrowserRouter([
         <ContentLayout />
       </RootLayout>
     ),
-    errorElement: <NotFoundPage />,
     children: [
       {
         path: "",
@@ -74,7 +71,6 @@ const router = createBrowserRouter([
         <ContentLayout />
       </RootLayout>
     ),
-    errorElement: <NotFoundPage />,
     children: [
       {
         path: "",
