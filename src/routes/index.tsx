@@ -11,6 +11,7 @@ import HistoryPage from "../pages/HistoryPage";
 import DetailHistoryPage from "../pages/DetailHistoryPage";
 import DashboardPage from "../pages/DashboardPage";
 import { PATH } from "../constants/path";
+import ProtectedRoute from "../components/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -56,7 +57,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <HistoryPage />,
+        element: (
+          <ProtectedRoute allowedRoles={["user", "admin"]}>
+            <HistoryPage />
+          </ProtectedRoute>
+        ),
       },
       {
         path: ":history_id",
