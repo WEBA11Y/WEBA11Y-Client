@@ -14,6 +14,7 @@ export default function MainPage() {
   return (
     <MainContainer>
       <Background />
+      A11y
       <TitleSection />
       <InspectionForm register={register} errors={errors} />
     </MainContainer>
