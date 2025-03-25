@@ -19,25 +19,25 @@ const MENU_ITEMS = [
     path: PATH.DASHBOARD,
     icon: <FaChartBar />,
     label: "대시보드",
-    allowedRoles: ["user"],
+    allowedRoles: ["user", "guest"],
   },
   {
     path: PATH.HISTORY,
     icon: <FaHistory />,
     label: "분석 히스토리",
-    allowedRoles: ["user", "guest"],
+    allowedRoles: ["user"],
   },
   {
     path: PATH.GUIDE,
     icon: <FaQuestionCircle />,
     label: "도움말 및 가이드",
-    allowedRoles: ["user"],
+    allowedRoles: ["user", "guest"],
   },
   {
     path: PATH.SETTINGS,
     icon: <FaCog />,
     label: "사용자 설정",
-    allowedRoles: ["user", "guest"],
+    allowedRoles: ["user"],
   },
 ];
 
