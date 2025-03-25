@@ -1,19 +1,27 @@
 import { create } from "zustand";
 
+type UserRole = "guest" | "user";
+
 type AuthState = {
   isLoggedIn: boolean;
-  login: (token: string) => void;
+  login: (token: string, role: UserRole) => void;
   logout: () => void;
+  role: UserRole;
 };
 
 const useAuthStore = create<AuthState>((set) => ({
   isLoggedIn: !!localStorage.getItem("accessToken"),
-  login: (token) => {
+  role: (localStorage.getItem("userRole") as UserRole) || "guest",
+  login: (token, role) => {
     localStorage.setItem("accessToken", token);
+    localStorage.setItem("userRole", role);
+    set({ isLoggedIn: true, role: "user" });
   },
   logout: () => {
     localStorage.removeItem("accessToken");
-    set({ isLoggedIn: false });
+    localStorage.removeItem("userRole");
+
+    set({ isLoggedIn: false, role: "guest" });
   },
 }));
 

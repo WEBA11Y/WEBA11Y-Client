@@ -1,3 +1,4 @@
+import * as React from "react";
 import { styled } from "styled-components";
 import { Link, useLocation } from "react-router-dom";
 import {
@@ -11,34 +12,57 @@ import {
 import { PATH } from "../constants/path";
 import Typography from "./Typography";
 import Button from "./Button";
+import useAuthStore from "../store/useAuthStore";
 
 const MENU_ITEMS = [
-  { path: PATH.DASHBOARD, icon: <FaChartBar />, label: "대시보드" },
-  { path: PATH.HISTORY, icon: <FaHistory />, label: "분석 히스토리" },
-  { path: PATH.GUIDE, icon: <FaQuestionCircle />, label: "도움말 및 가이드" },
-  { path: PATH.SETTINGS, icon: <FaCog />, label: "사용자 설정" },
+  {
+    path: PATH.DASHBOARD,
+    icon: <FaChartBar />,
+    label: "대시보드",
+    allowedRoles: ["user", "guest"],
+  },
+  {
+    path: PATH.HISTORY,
+    icon: <FaHistory />,
+    label: "분석 히스토리",
+    allowedRoles: ["user"],
+  },
+  {
+    path: PATH.GUIDE,
+    icon: <FaQuestionCircle />,
+    label: "도움말 및 가이드",
+    allowedRoles: ["user", "guest"],
+  },
+  {
+    path: PATH.SETTINGS,
+    icon: <FaCog />,
+    label: "사용자 설정",
+    allowedRoles: ["user"],
+  },
 ];
 
 export default function Sidebar() {
   const location = useLocation().pathname;
-
+  const { role } = useAuthStore();
   return (
     <SidebarContainer>
       <Menu>
-        {MENU_ITEMS.map(({ path, icon, label }) => {
-          const isActive = location === path;
-          return (
-            <MenuItem key={path} to={path} active={isActive}>
-              {icon}
-              <Typography
-                variant='text'
-                size={isActive ? "mdBold" : "mdRegular"}
-              >
-                {label}
-              </Typography>
-            </MenuItem>
-          );
-        })}
+        {MENU_ITEMS.filter((item) => item.allowedRoles.includes(role)).map(
+          ({ path, icon, label }) => {
+            const isActive = location === path;
+            return (
+              <MenuItem key={path} to={path} active={isActive}>
+                {icon}
+                <Typography
+                  variant='text'
+                  size={isActive ? "mdBold" : "mdRegular"}
+                >
+                  {label}
+                </Typography>
+              </MenuItem>
+            );
+          }
+        )}
       </Menu>
       <Button variant='outline' type='button' icon={<FaPlus />} size='large'>
         ADD URL

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Header, HistoryList, SearchFilterBar } from "../features/History";
 import { HistoryListData } from "../features/History/types/HistoryList";
 import EmptyHistory from "../features/History/components/EmptyHistory";
+import { useRoleAuth } from "../hooks/useRoleAuth";
 
 const data: HistoryListData[] = [
   {
@@ -21,6 +22,8 @@ const data: HistoryListData[] = [
 ];
 
 export default function HistoryPage() {
+  useRoleAuth();
+
   const [historyListData, setHistoryListData] =
     useState<HistoryListData[]>(data);
   const [checkedItems, setCheckedItems] = useState<number[]>([]);
