@@ -15,6 +15,7 @@ const useAuthStore = create<AuthState>((set) => ({
   login: (token, role) => {
     localStorage.setItem("accessToken", token);
     localStorage.setItem("userRole", role);
+    set({ isLoggedIn: true, role: "user" });
   },
   logout: () => {
     localStorage.removeItem("accessToken");
