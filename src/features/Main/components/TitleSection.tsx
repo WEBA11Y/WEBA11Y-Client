@@ -6,7 +6,7 @@ export default function TitleSection() {
   return (
     <TitleContainer>
       <Typography variant='title' size='mdBold'>
-        모든 사용자를 위한 웹test
+        모든 사용자를 위한 웹
       </Typography>
       <Typography variant='title' size='mdRegular'>
         접근성은 선택이 아닌 필수입니다.
