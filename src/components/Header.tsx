@@ -9,8 +9,13 @@ import useAuthStore from "../store/useAuthStore";
 
 export default function Header() {
   const navigate = useNavigate();
-  const { isLoggedIn, logout } = useAuthStore();
+  const { isLoggedIn, logout: performLogout } = useAuthStore();
   const home = location.pathname === "/";
+
+  const logout = () => {
+    performLogout();
+    navigate(PATH.HOME);
+  };
 
   return (
     <HeaderContainer>
