@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { Header, HistoryList, SearchFilterBar } from "../features/History";
 import { HistoryListData } from "../features/History/types/HistoryList";
 import EmptyHistory from "../features/History/components/EmptyHistory";
+import useAuthStore from "../store/useAuthStore";
+import { RoleError } from "../features/Signup/utils/error";
 
 const data: HistoryListData[] = [
   {
@@ -21,6 +23,11 @@ const data: HistoryListData[] = [
 ];
 
 export default function HistoryPage() {
+  const { role } = useAuthStore();
+  if (role === "guest") {
+    throw new RoleError();
+  }
+
   const [historyListData, setHistoryListData] =
     useState<HistoryListData[]>(data);
   const [checkedItems, setCheckedItems] = useState<number[]>([]);

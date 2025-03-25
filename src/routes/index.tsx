@@ -10,7 +10,6 @@ import SignUpPage from "../pages/SignUpPage";
 import HistoryPage from "../pages/HistoryPage";
 import DetailHistoryPage from "../pages/DetailHistoryPage";
 import DashboardPage from "../pages/DashboardPage";
-import ProtectedRoute from "../components/ProtectedRoute";
 import { PATH } from "../constants/path";
 
 const router = createBrowserRouter([
@@ -48,19 +47,11 @@ const router = createBrowserRouter([
         children: [
           {
             path: "",
-            element: (
-              <ProtectedRoute allowedRoles={["user", "admin"]}>
-                <HistoryPage />
-              </ProtectedRoute>
-            ),
+            element: <HistoryPage />,
           },
           {
             path: ":history_id",
-            element: (
-              <ProtectedRoute allowedRoles={["user", "admin"]}>
-                <DetailHistoryPage />
-              </ProtectedRoute>
-            ),
+            element: <DetailHistoryPage />,
           },
         ],
       },

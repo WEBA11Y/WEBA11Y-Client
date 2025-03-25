@@ -5,37 +5,34 @@ import { useNavigate } from "react-router-dom";
 
 import Typography from "./Typography";
 import Button from "./Button";
-import { getFriendlyMessage } from "../utils/errorMessage";
 import { PATH } from "../constants/path";
+import { RoleError } from "../features/Signup/utils/error";
 
 export default function ErrorFallback({
   error,
   resetErrorBoundary,
 }: FallbackProps) {
-  const message = getFriendlyMessage(error);
   const navigate = useNavigate();
+  const isRoleError = error instanceof RoleError;
 
-  const isAuthError = message.includes("로그인");
+  const handleClick = () => {
+    if (isRoleError) {
+      navigate(PATH.SIGNIN);
+    } else {
+      navigate(PATH.HOME);
+    }
+    resetErrorBoundary();
+  };
   return (
     <Container role='alert'>
       <FiAlertCircle size={50} />
       <Title variant='title'>문제가 발생했습니다</Title>
       <Message variant='text' size='md'>
-        {getFriendlyMessage(error)}
+        {error.message}
       </Message>
       <RetryButton>
-        <Button
-          size='full'
-          type='button'
-          onClick={() => {
-            if (isAuthError) {
-              navigate(PATH.SIGNIN);
-            } else {
-              resetErrorBoundary();
-            }
-          }}
-        >
-          {isAuthError ? "로그인하러 가기" : "다시 시도"}
+        <Button size='full' type='button' onClick={handleClick}>
+          {isRoleError ? "로그인 하러가기" : "홈으로 이동"}
         </Button>
       </RetryButton>
     </Container>

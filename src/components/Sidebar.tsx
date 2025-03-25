@@ -44,7 +44,6 @@ const MENU_ITEMS = [
 export default function Sidebar() {
   const location = useLocation().pathname;
   const { role } = useAuthStore();
-  console.log(role);
   return (
     <SidebarContainer>
       <Menu>
