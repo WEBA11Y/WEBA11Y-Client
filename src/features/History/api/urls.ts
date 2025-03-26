@@ -1,15 +1,5 @@
 import httpClient from "../../../api/http";
-
-type UrlData = {
-  summary: string;
-  url: string;
-  parentId: number;
-};
-// const urlData = {
-//   summary: "title",
-//   url: "http://localhost",
-//   parentId: 0,
-// };
+import { UrlData } from "../types/HistoryList";
 
 export const registerUrls = async (urlData: UrlData) => {
   const response = await httpClient.post("/api/v1/urls", urlData);
