@@ -3,15 +3,25 @@ import { useState } from "react";
 
 import { Header, HistoryList, SearchFilterBar } from "../features/History";
 import EmptyHistory from "../features/History/components/EmptyHistory";
-import { useRoleAuth } from "../hooks/useRoleAuth";
 import { useUrls } from "../features/History/hooks/useUrls";
 import { showErrorToast } from "../features/Signup/utils/toast";
 import AlertModal from "../components/modal/AlertModal";
+import { getSortedList } from "../features/History/utils/sort";
+import useAuthStore from "../store/useAuthStore";
+import { RoleError } from "../features/Signup/utils/error";
 
 export default function HistoryPage() {
-  useRoleAuth();
   const { useUserUrls } = useUrls();
-  const { data: historyListData } = useUserUrls();
+  const { data } = useUserUrls();
+
+  const { role } = useAuthStore();
+
+  if (role === "guest") {
+    throw new RoleError();
+  }
+
+  const [sort, setSort] = useState<string>("latest");
+  const historyListData = getSortedList(data, sort);
 
   const [checkedItems, setCheckedItems] = useState<number[]>([]);
   const [isDeleteMode, setIsDeleteMode] = useState(false);
@@ -41,6 +51,7 @@ export default function HistoryPage() {
         <AlertModal
           title={`정말 삭제하시겠습니까?`}
           description={`선택한 ${checkedItems.length}개의 URL을 삭제합니다.`}
+          //삭제 로직 추가
           onConfirm={() => {}}
           onCancel={() => setIsModal((prev) => !prev)}
         />
@@ -49,11 +60,13 @@ export default function HistoryPage() {
       <Header
         mode={toggleDeleteMode}
         isDeleteMode={isDeleteMode}
-        count={historyListData?.length}
+        count={data?.length}
       />
-      {historyListData?.length ? (
+      {data?.length ? (
         <>
-          {!isDeleteMode && <SearchFilterBar onSubmit={() => {}} />}
+          {!isDeleteMode && (
+            <SearchFilterBar onSortChange={setSort} currentSort={sort} />
+          )}
           <HistoryList
             historyListData={historyListData}
             isDeleteMode={isDeleteMode}

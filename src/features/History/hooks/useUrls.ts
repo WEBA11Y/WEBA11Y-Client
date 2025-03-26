@@ -22,7 +22,7 @@ export const useUrls = () => {
       select: (data: HistoryListData[]) =>
         data.map((item) => ({
           id: item.id,
-          sumary: "서비스명",
+          summary: item.summary,
           createDate: item.createDate,
           logo: "https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg",
         })),

@@ -1,6 +1,6 @@
 export type HistoryListData = {
   id: number;
-  sumary: string;
+  summary: string;
   createDate: string;
   logo: string;
 };

@@ -14,7 +14,7 @@ interface Props {
 }
 
 export default function AnalysisItem({
-  item: { id, sumary, createDate, logo },
+  item: { id, summary, createDate, logo },
   isDeleteMode,
   onCheck,
   checkedItems,
@@ -24,7 +24,7 @@ export default function AnalysisItem({
     <ItemContainer to={isDeleteMode ? undefined : `${PATH.HISTORY}/${id}`}>
       <ItemLeft>
         {logo ? (
-          <Logo src={logo} alt={`${sumary} logo`} />
+          <Logo src={logo} alt={`${summary} logo`} />
         ) : (
           <EmptyLogo>
             <FiBox />
@@ -32,7 +32,7 @@ export default function AnalysisItem({
         )}
 
         <TextContainer>
-          <ServiceName>{sumary}</ServiceName>
+          <ServiceName>{summary}</ServiceName>
           <Date>{createDate.split("T")[0]}</Date>
         </TextContainer>
       </ItemLeft>
