@@ -7,6 +7,7 @@ import {
   registerUrls,
   validateUrl,
 } from "../api/urls";
+import { HistoryListData } from "../types/HistoryList";
 
 export const useUrls = () => {
   const queryClient = useQueryClient();
@@ -18,6 +19,12 @@ export const useUrls = () => {
       staleTime: 1000 * 60 * 5,
       refetchOnWindowFocus: false,
       retry: 2,
+      select: (data: HistoryListData[]) =>
+        data.map((item) => ({
+          id: item.id,
+          sumary: "서비스명",
+          createDate: item.createDate,
+        })),
     });
   };
 
