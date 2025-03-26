@@ -1,5 +1,6 @@
 import { styled } from "styled-components";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { toast } from "react-toastify";
 
 import { Header, HistoryList, SearchFilterBar } from "../features/History";
 import EmptyHistory from "../features/History/components/EmptyHistory";
@@ -20,19 +21,26 @@ export default function HistoryPage() {
     );
   };
 
-  const toggleDeleteMode = () => {
-    setIsDeleteMode((prev) => !prev);
-  };
+  const toggleDeleteMode = (type: string) => {
+    if (type === "cancel" || type === "delete") {
+      setIsDeleteMode((prev) => !prev);
+    } else {
+      checkedItems.length === 0 &&
+        toast.error("URL이 선택되지 않았습니다", {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
 
-  useEffect(() => {
-    if (!isDeleteMode) {
-      setCheckedItems([]);
+      if (!checkedItems.length) return;
+      // 확인 버튼을 눌렀을 때, 선택한 아이템이 있으면, 선택한 아이템 총 갯수 n개 삭제하시겠습니까? 모달 창 띄움
     }
-  }, [isDeleteMode]);
-
-  // const handleDelete = () => {
-  //   if (!checkedItems.length) return;
-  // };
+  };
 
   return (
     <Container>
