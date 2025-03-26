@@ -1,6 +1,6 @@
 export interface HistoryListData {
   id: number;
+  sumary: string;
+  createDate: string;
   logo: string;
-  name: string;
-  date: string;
 }

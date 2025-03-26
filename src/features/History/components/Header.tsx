@@ -6,30 +6,31 @@ import Typography from "../../../components/Typography";
 interface Props {
   mode: () => void;
   isDeleteMode: boolean;
+  count: number | undefined;
 }
 
-export default function Header({ mode, isDeleteMode }: Props) {
-  const count = 3;
-
+export default function Header({ mode, isDeleteMode, count }: Props) {
   return (
     <Container>
       <RegistrationURL variant='title' size='sm'>
-        등록된 URL ({count})
+        등록된 URL ({count ? count : 0})
       </RegistrationURL>
-      {isDeleteMode ? (
-        <ButtonGroup>
-          <Button variant='outline' type='button' onClick={mode}>
-            취소
+      {count &&
+        count > 0 &&
+        (isDeleteMode ? (
+          <ButtonGroup>
+            <Button variant='outline' type='button' onClick={mode}>
+              취소
+            </Button>
+            <Button variant='fill' type='button'>
+              확인
+            </Button>
+          </ButtonGroup>
+        ) : (
+          <Button variant='fill' type='button' onClick={mode}>
+            삭제
           </Button>
-          <Button variant='fill' type='button'>
-            확인
-          </Button>
-        </ButtonGroup>
-      ) : (
-        <Button variant='fill' type='button' onClick={mode}>
-          삭제
-        </Button>
-      )}
+        ))}
     </Container>
   );
 }

@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
 import { BsArrowUpRightCircle } from "react-icons/bs";
-import { FiCheckCircle } from "react-icons/fi";
+import { FiCheckCircle, FiBox } from "react-icons/fi";
 
 import { HistoryListData } from "../types/HistoryList";
 import { PATH } from "../../../constants/path";
@@ -14,20 +14,26 @@ interface Props {
 }
 
 export default function AnalysisItem({
-  item: { id, logo, name, date },
+  item: { id, sumary, createDate, logo },
   isDeleteMode,
   onCheck,
   checkedItems,
 }: Props) {
   const isChecked = checkedItems.includes(id);
-
   return (
-    <ItemContainer to={`${PATH.HISTORY}/${id}`}>
+    <ItemContainer to={isDeleteMode ? undefined : `${PATH.HISTORY}/${id}`}>
       <ItemLeft>
-        <Logo src={logo} alt={`${name} logo`} />
+        {logo ? (
+          <Logo src={logo} alt={`${sumary} logo`} />
+        ) : (
+          <EmptyLogo>
+            <FiBox />
+          </EmptyLogo>
+        )}
+
         <TextContainer>
-          <ServiceName>{name}</ServiceName>
-          <Date>{date}</Date>
+          <ServiceName>{sumary}</ServiceName>
+          <Date>{createDate.split("T")[0]}</Date>
         </TextContainer>
       </ItemLeft>
       {isDeleteMode ? (
@@ -59,6 +65,17 @@ const ItemLeft = styled.div`
 `;
 
 const Logo = styled.img`
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: ${({ theme }) => theme.colors.neutral[100]};
+`;
+
+const EmptyLogo = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: ${({ theme }) => theme.colors.neutral[400]};
   width: 32px;
   height: 32px;
   border-radius: 50%;

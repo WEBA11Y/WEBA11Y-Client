@@ -2,33 +2,17 @@ import { styled } from "styled-components";
 import { useEffect, useState } from "react";
 
 import { Header, HistoryList, SearchFilterBar } from "../features/History";
-import { HistoryListData } from "../features/History/types/HistoryList";
 import EmptyHistory from "../features/History/components/EmptyHistory";
 import { useRoleAuth } from "../hooks/useRoleAuth";
-
-const data: HistoryListData[] = [
-  {
-    id: 1,
-    logo: "https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg",
-    name: "PawMate",
-    date: "2024.09.08",
-  },
-  {
-    id: 2,
-    logo: "https://upload.wikimedia.org/wikipedia/commons/0/08/Pinterest-logo.png",
-    name: "PawMate",
-    date: "2024.09.08",
-  },
-];
+import { useUrls } from "../features/History/hooks/useUrls";
 
 export default function HistoryPage() {
   useRoleAuth();
+  const { useUserUrls } = useUrls();
+  const { data: historyListData } = useUserUrls();
 
-  const [historyListData, setHistoryListData] =
-    useState<HistoryListData[]>(data);
   const [checkedItems, setCheckedItems] = useState<number[]>([]);
   const [isDeleteMode, setIsDeleteMode] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleCheck = (id: number) => {
     setCheckedItems((prev) =>
@@ -46,20 +30,20 @@ export default function HistoryPage() {
     }
   }, [isDeleteMode]);
 
-  const handleSearch = () => {
-    console.log("Search", setHistoryListData, isModalOpen, setIsModalOpen);
-  };
-
   // const handleDelete = () => {
   //   if (!checkedItems.length) return;
   // };
 
   return (
     <Container>
-      <Header mode={toggleDeleteMode} isDeleteMode={isDeleteMode} />
-      {historyListData.length ? (
+      <Header
+        mode={toggleDeleteMode}
+        isDeleteMode={isDeleteMode}
+        count={historyListData?.length}
+      />
+      {historyListData?.length ? (
         <>
-          {!isDeleteMode && <SearchFilterBar onSubmit={handleSearch} />}
+          {!isDeleteMode && <SearchFilterBar onSubmit={() => {}} />}
           <HistoryList
             historyListData={historyListData}
             isDeleteMode={isDeleteMode}
