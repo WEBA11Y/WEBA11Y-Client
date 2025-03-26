@@ -51,7 +51,7 @@ export default function Sidebar() {
           ({ path, icon, label }) => {
             const isActive = location === path;
             return (
-              <MenuItem key={path} to={path} active={isActive}>
+              <MenuItem key={path} to={path} $active={isActive}>
                 {icon}
                 <Typography
                   variant='text'
@@ -87,16 +87,16 @@ const Menu = styled.ul`
   width: 100%;
 `;
 
-const MenuItem = styled(Link)<{ active?: boolean }>`
+const MenuItem = styled(Link)<{ $active?: boolean }>`
   display: flex;
   align-items: center;
   padding: 12px;
   border-radius: 8px;
   margin-bottom: 10px;
-  background-color: ${({ active, theme }) =>
-    active ? theme.colors.neutral[100] : "transparent"};
-  color: ${({ active, theme }) =>
-    active ? theme.colors.neutral[800] : theme.colors.neutral[600]};
+  background-color: ${({ $active, theme }) =>
+    $active ? theme.colors.neutral[100] : "transparent"};
+  color: ${({ $active, theme }) =>
+    $active ? theme.colors.neutral[800] : theme.colors.neutral[600]};
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.neutral[100]};
