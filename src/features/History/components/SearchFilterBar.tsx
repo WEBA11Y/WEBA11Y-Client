@@ -1,3 +1,4 @@
+import { ChangeEvent, FormEvent } from "react";
 import { styled } from "styled-components";
 import { IoSearchOutline } from "react-icons/io5";
 import { CiFilter } from "react-icons/ci";
@@ -5,24 +6,28 @@ import { CiFilter } from "react-icons/ci";
 import DropshadowCard from "../../../components/DropshadowCard";
 
 interface Props {
-  search: string;
-  sort: string;
+  onSortChange: (value: string) => void;
+  currentSort: string;
 }
-export default function SearchFilterBar({
-  onSubmit,
-}: {
-  onSubmit: (data: Props) => void;
-}) {
+export default function SearchFilterBar({ onSortChange, currentSort }: Props) {
   return (
     <DropshadowCard>
-      <FormContainer onSubmit={onSubmit}>
+      <FormContainer
+        onSubmit={(e: FormEvent<HTMLFormElement>) => e.preventDefault()}
+      >
         <SearchBox>
           <IoSearchOutline />
           <SearchInput placeholder='URL 혹은 서비스 명을 검색해주세요' />
         </SearchBox>
         <SortBox>
           <CiFilter />
-          <SortSelect defaultValue='정렬 기준'>
+          <SortSelect
+            value={currentSort}
+            onChange={(e: ChangeEvent<HTMLSelectElement>) =>
+              onSortChange(e.target.value)
+            }
+            defaultValue='정렬 기준'
+          >
             <option value='sort' hidden>
               정렬기준
             </option>
