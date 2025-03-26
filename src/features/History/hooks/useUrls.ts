@@ -24,6 +24,7 @@ export const useUrls = () => {
           id: item.id,
           sumary: "서비스명",
           createDate: item.createDate,
+          logo: "https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg",
         })),
     });
   };
