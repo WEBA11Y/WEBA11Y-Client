@@ -6,6 +6,7 @@ import EmptyHistory from "../features/History/components/EmptyHistory";
 import { useRoleAuth } from "../hooks/useRoleAuth";
 import { useUrls } from "../features/History/hooks/useUrls";
 import { showErrorToast } from "../features/Signup/utils/toast";
+import AlertModal from "../components/modal/AlertModal";
 
 export default function HistoryPage() {
   useRoleAuth();
@@ -14,6 +15,7 @@ export default function HistoryPage() {
 
   const [checkedItems, setCheckedItems] = useState<number[]>([]);
   const [isDeleteMode, setIsDeleteMode] = useState(false);
+  const [isModal, setIsModal] = useState(false);
 
   const handleCheck = (id: number) => {
     setCheckedItems((prev) =>
@@ -29,12 +31,21 @@ export default function HistoryPage() {
       checkedItems.length === 0 && showErrorToast("URL이 선택되지 않았습니다");
 
       if (!checkedItems.length) return;
-      // 확인 버튼을 눌렀을 때, 선택한 아이템이 있으면, 선택한 아이템 총 갯수 n개 삭제하시겠습니까? 모달 창 띄움
+      setIsModal((prev) => !prev);
     }
   };
 
   return (
     <Container>
+      {isModal ? (
+        <AlertModal
+          title={`정말 삭제하시겠습니까?`}
+          description={`선택한 ${checkedItems.length}개의 URL을 삭제합니다.`}
+          onConfirm={() => {}}
+          onCancel={() => setIsModal((prev) => !prev)}
+        />
+      ) : null}
+
       <Header
         mode={toggleDeleteMode}
         isDeleteMode={isDeleteMode}

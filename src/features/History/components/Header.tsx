@@ -4,7 +4,7 @@ import Button from "../../../components/Button";
 import Typography from "../../../components/Typography";
 
 interface Props {
-  mode: () => void;
+  mode: (type: string) => void;
   isDeleteMode: boolean;
   count: number | undefined;
 }
@@ -19,15 +19,19 @@ export default function Header({ mode, isDeleteMode, count }: Props) {
         count > 0 &&
         (isDeleteMode ? (
           <ButtonGroup>
-            <Button variant='outline' type='button' onClick={mode}>
+            <Button
+              variant='outline'
+              type='button'
+              onClick={() => mode("cancel")}
+            >
               취소
             </Button>
-            <Button variant='fill' type='button'>
+            <Button variant='fill' type='button' onClick={() => mode("submit")}>
               확인
             </Button>
           </ButtonGroup>
         ) : (
-          <Button variant='fill' type='button' onClick={mode}>
+          <Button variant='fill' type='button' onClick={() => mode("delete")}>
             삭제
           </Button>
         ))}
