@@ -23,7 +23,7 @@ export default function ImportantIssues() {
       <List>
         {issues.map(({ id, text }, index) => {
           return (
-            <Item key={id} isEven={index % 2}>
+            <Item key={id} $$isEven={index % 2}>
               <Typography variant='text' size='mdRegular'>
                 {`${id}. ${text}`}
               </Typography>
@@ -42,13 +42,13 @@ const List = styled.ul`
   margin-top: 10px;
 `;
 
-const Item = styled.li<{ isEven: boolean }>`
+const Item = styled.li<{ $isEven: boolean }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 12px;
   color: ${({ theme }) => theme.colors.neutral[700]};
   cursor: pointer;
-  background: ${({ isEven, theme }) =>
-    isEven ? theme.colors.neutral[100] : theme.colors.common.white};
+  background: ${({ $isEven, theme }) =>
+    $isEven ? theme.colors.neutral[100] : theme.colors.common.white};
 `;

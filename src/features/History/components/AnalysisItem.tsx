@@ -37,7 +37,7 @@ export default function AnalysisItem({
         </TextContainer>
       </ItemLeft>
       {isDeleteMode ? (
-        <CheckBox isChecked={isChecked} onClick={() => onCheck(id)}>
+        <CheckBox $isChecked={isChecked} onClick={() => onCheck(id)}>
           <FiCheckCircle />
         </CheckBox>
       ) : (
@@ -107,8 +107,8 @@ const ExternalLink = styled.button`
   align-items: center;
 `;
 
-const CheckBox = styled.button<{ isChecked: boolean }>`
-  color: ${({ theme, isChecked }) =>
-    isChecked ? theme.colors.primary[500] : theme.colors.neutral[500]};
+const CheckBox = styled.button<{ $isChecked: boolean }>`
+  color: ${({ theme, $isChecked }) =>
+    $isChecked ? theme.colors.primary[500] : theme.colors.neutral[500]};
   font-size: 24px;
 `;
