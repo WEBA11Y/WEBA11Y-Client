@@ -8,8 +8,15 @@ import DropshadowCard from "../../../components/DropshadowCard";
 interface Props {
   onSortChange: (value: string) => void;
   currentSort: string;
+  onSearchChange: (value: string) => void;
+  currentSearchKeyword: string;
 }
-export default function SearchFilterBar({ onSortChange, currentSort }: Props) {
+export default function SearchFilterBar({
+  onSortChange,
+  currentSort,
+  onSearchChange,
+  currentSearchKeyword,
+}: Props) {
   return (
     <DropshadowCard>
       <FormContainer
@@ -17,7 +24,14 @@ export default function SearchFilterBar({ onSortChange, currentSort }: Props) {
       >
         <SearchBox>
           <IoSearchOutline />
-          <SearchInput placeholder='URL 혹은 서비스 명을 검색해주세요' />
+          <SearchInput
+            value={currentSearchKeyword}
+            placeholder='URL 혹은 서비스 명을 검색해주세요'
+            onChange={(e: ChangeEvent<HTMLInputElement>) => {
+              console.log(e.target.value);
+              onSearchChange(e.target.value);
+            }}
+          />
         </SearchBox>
         <SortBox>
           <CiFilter />

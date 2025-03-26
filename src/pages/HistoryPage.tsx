@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import { Header, HistoryList, SearchFilterBar } from "../features/History";
 import EmptyHistory from "../features/History/components/EmptyHistory";
@@ -9,11 +9,10 @@ import AlertModal from "../components/modal/AlertModal";
 import { getSortedList } from "../features/History/utils/sort";
 import useAuthStore from "../store/useAuthStore";
 import { RoleError } from "../features/Signup/utils/error";
+import { useDebounce } from "../hooks/useDebounce";
 
 export default function HistoryPage() {
   const { useUserUrls } = useUrls();
-  const { data } = useUserUrls();
-
   const { role } = useAuthStore();
 
   if (role === "guest") {
@@ -21,11 +20,21 @@ export default function HistoryPage() {
   }
 
   const [sort, setSort] = useState<string>("latest");
-  const historyListData = getSortedList(data, sort);
-
+  const [search, setSearch] = useState<string>("");
   const [checkedItems, setCheckedItems] = useState<number[]>([]);
   const [isDeleteMode, setIsDeleteMode] = useState(false);
   const [isModal, setIsModal] = useState(false);
+
+  const { data } = useUserUrls();
+  const debounceSearch = useDebounce(search, 300);
+
+  const filteredData = useMemo(() => {
+    return data?.filter((item) =>
+      item.summary.toLowerCase().includes(debounceSearch.toLowerCase())
+    );
+  }, [data, debounceSearch]);
+
+  const historyListData = getSortedList(filteredData, sort);
 
   const handleCheck = (id: number) => {
     setCheckedItems((prev) =>
@@ -39,7 +48,6 @@ export default function HistoryPage() {
       setCheckedItems([]);
     } else {
       checkedItems.length === 0 && showErrorToast("URL이 선택되지 않았습니다");
-
       if (!checkedItems.length) return;
       setIsModal((prev) => !prev);
     }
@@ -65,7 +73,12 @@ export default function HistoryPage() {
       {data?.length ? (
         <>
           {!isDeleteMode && (
-            <SearchFilterBar onSortChange={setSort} currentSort={sort} />
+            <SearchFilterBar
+              onSortChange={setSort}
+              currentSort={sort}
+              onSearchChange={setSearch}
+              currentSearchKeyword={search}
+            />
           )}
           <HistoryList
             historyListData={historyListData}
