@@ -5,12 +5,14 @@ import { FiCheckCircle, FiBox } from "react-icons/fi";
 
 import { HistoryListData } from "../types/HistoryList";
 import { PATH } from "../../../constants/path";
+import { getHighlightedText } from "../utils/getHighlightedText";
 
 interface Props {
   item: HistoryListData;
   isDeleteMode: boolean;
   checkedItems: number[];
   onCheck: (id: number) => void;
+  searchKeyword: string;
 }
 
 export default function AnalysisItem({
@@ -18,8 +20,10 @@ export default function AnalysisItem({
   isDeleteMode,
   onCheck,
   checkedItems,
+  searchKeyword,
 }: Props) {
   const isChecked = checkedItems.includes(id);
+
   return (
     <ItemContainer to={isDeleteMode ? undefined : `${PATH.HISTORY}/${id}`}>
       <ItemLeft>
@@ -32,10 +36,13 @@ export default function AnalysisItem({
         )}
 
         <TextContainer>
-          <ServiceName>{summary}</ServiceName>
+          <ServiceName>
+            {getHighlightedText(summary, searchKeyword)}
+          </ServiceName>
           <Date>{createDate.split("T")[0]}</Date>
         </TextContainer>
       </ItemLeft>
+
       {isDeleteMode ? (
         <CheckBox $isChecked={isChecked} onClick={() => onCheck(id)}>
           <FiCheckCircle />
