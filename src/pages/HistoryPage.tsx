@@ -29,7 +29,7 @@ export default function HistoryPage() {
 
   return (
     <Container>
-      {isModal ? (
+      {isModal && (
         <AlertModal
           title={`정말 삭제하시겠습니까?`}
           description={`선택한 ${checkedItems.length}개의 URL을 삭제합니다.`}
@@ -37,7 +37,7 @@ export default function HistoryPage() {
           onConfirm={() => {}}
           onCancel={() => setIsModal((prev) => !prev)}
         />
-      ) : null}
+      )}
 
       <Header
         mode={toggleDeleteMode}
