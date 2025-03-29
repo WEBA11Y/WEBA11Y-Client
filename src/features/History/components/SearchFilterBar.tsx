@@ -39,7 +39,6 @@ export default function SearchFilterBar({
             onChange={(e: ChangeEvent<HTMLSelectElement>) =>
               onSortChange(e.target.value)
             }
-            defaultValue='정렬 기준'
           >
             <option value='sort' hidden>
               정렬기준
