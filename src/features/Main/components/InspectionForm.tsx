@@ -4,25 +4,48 @@ import { UseFormRegister, FieldErrors } from "react-hook-form";
 import Button from "../../../components/Button";
 import Input from "../../../components/Input";
 import { InspectionFormType } from "../types/main";
+import { useUrls } from "../../History/hooks/useUrls";
+import { showErrorToast } from "../../Signup/utils/toast";
 
 interface InspectionFormProps {
   register: UseFormRegister<InspectionFormType>;
   errors: FieldErrors<InspectionFormType>;
+  getValues: () => InspectionFormType;
 }
 
 export default function InspectionForm({
   register,
   errors,
+  getValues,
 }: InspectionFormProps) {
+  const { useRegisterUrl } = useUrls();
+  const registerUrl = useRegisterUrl();
+
+  const handleSubmit = () => {
+    const { summary, url } = getValues();
+    if (!summary || !url)
+      return showErrorToast("서비스명과 URL을 입력해주세요");
+    registerUrl.mutate({
+      summary,
+      url,
+      parentId: null,
+    });
+  };
+
   return (
-    <FormContainer onSubmit={() => {}}>
+    <FormContainer
+      onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        handleSubmit();
+      }}
+    >
       <Input
         type='text'
-        name='serviceName'
+        name='summary'
         label='서비스 명'
         placeholder='서비스 명을 작성해주세요'
         register={register}
-        error={errors.serviceName}
+        error={errors.summary}
       />
       <Input
         type='text'

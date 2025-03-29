@@ -8,5 +8,5 @@ export type HistoryListData = {
 export type UrlData = {
   summary: string;
   url: string;
-  parentId: number;
+  parentId: number | null;
 };

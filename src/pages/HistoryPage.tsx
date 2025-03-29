@@ -11,6 +11,7 @@ import { useHistoryFilter } from "../features/History/hooks/useHistoryFilter";
 import { useHistoryDelete } from "../features/History/hooks/useHistoryDelete";
 
 export default function HistoryPage() {
+  // 데이터 무한스크롤/페이지네이션 로직 작성 필요
   const [isModal, setIsModal] = useState(false);
 
   const { useUserUrls } = useUrls();
