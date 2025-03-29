@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 
 import { deleteUrls, getUrlDetails, getUrls, registerUrls } from "../api/urls";
 import { HistoryListData, UrlData } from "../types/HistoryList";
@@ -32,7 +33,7 @@ export const useUrls = () => {
   };
 
   const useRegisterUrl = () => {
-    return useMutation<void, Error, UrlData>({
+    return useMutation<{ id: number }, AxiosError, UrlData>({
       mutationFn: registerUrls,
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ["urls"] });

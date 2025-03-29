@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 interface CheckDuplicateResponse {
   isDuplicate: boolean;
@@ -22,7 +22,7 @@ const checkDuplicate = async ({
 };
 
 export const useCheckDuplicate = () => {
-  return useMutation<CheckDuplicateResponse, Error, CheckDuplicateParams>({
+  return useMutation<CheckDuplicateResponse, AxiosError, CheckDuplicateParams>({
     mutationFn: checkDuplicate,
   });
 };
