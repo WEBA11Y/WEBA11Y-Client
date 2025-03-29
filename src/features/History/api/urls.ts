@@ -20,10 +20,3 @@ export const getUrlDetails = async (urlId: number) => {
   const response = await httpClient.get(`/api/v1/urls/${urlId}`);
   return response.data;
 };
-
-export const validateUrl = async (url: string) => {
-  const response = await httpClient.get(`/api/v1/urls/validate`, {
-    params: { url },
-  });
-  return response.data;
-};
