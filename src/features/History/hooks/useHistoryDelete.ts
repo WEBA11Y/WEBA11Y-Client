@@ -27,6 +27,7 @@ export const useHistoryDelete = (
     checkedItems,
     setCheckedItems,
     isDeleteMode,
+    setIsDeleteMode,
     handleCheck,
     toggleDeleteMode,
   };

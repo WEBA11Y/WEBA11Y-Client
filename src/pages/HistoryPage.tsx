@@ -14,14 +14,20 @@ export default function HistoryPage() {
   // 데이터 무한스크롤/페이지네이션 로직 작성 필요
   const [isModal, setIsModal] = useState(false);
 
-  const { useUserUrls } = useUrls();
+  const { useUserUrls, useDeleteUrl } = useUrls();
+  const { mutate: deleteUrls } = useDeleteUrl();
+
   const { data: originalList } = useUserUrls();
 
   const { sort, setSort, search, setSearch, sortedList } =
     useHistoryFilter(originalList);
-  const { checkedItems, handleCheck, isDeleteMode, toggleDeleteMode } =
-    useHistoryDelete(setIsModal);
-
+  const {
+    checkedItems,
+    handleCheck,
+    isDeleteMode,
+    setIsDeleteMode,
+    toggleDeleteMode,
+  } = useHistoryDelete(setIsModal);
   const { role } = useAuthStore();
 
   if (role === "guest") {
@@ -34,8 +40,11 @@ export default function HistoryPage() {
         <AlertModal
           title={`정말 삭제하시겠습니까?`}
           description={`선택한 ${checkedItems.length}개의 URL을 삭제합니다.`}
-          //삭제 로직 추가
-          onConfirm={() => {}}
+          onConfirm={() => {
+            deleteUrls(checkedItems);
+            setIsDeleteMode((prev) => !prev);
+            setIsModal((prev) => !prev);
+          }}
           onCancel={() => setIsModal((prev) => !prev)}
         />
       )}

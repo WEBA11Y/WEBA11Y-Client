@@ -6,8 +6,8 @@ export const registerUrls = async (urlData: UrlData) => {
   return response.data.id;
 };
 
-export const deleteUrls = async (urlId: number) => {
-  const response = await httpClient.delete(`/api/v1/urls/${urlId}`);
+export const deleteUrls = async (urlIds: number[]) => {
+  const response = await httpClient.delete(`/api/v1/urls`, { data: urlIds });
   return response.data;
 };
 
