@@ -12,7 +12,7 @@ interface Props {
 export default function Header({ mode, isDeleteMode, count }: Props) {
   return (
     <Container>
-      <RegistrationURL variant='title' size='sm'>
+      <RegistrationURL variant='text' size='lg'>
         등록된 URL ({count ? count : 0})
       </RegistrationURL>
       {count &&

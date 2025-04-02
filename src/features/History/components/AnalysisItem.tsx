@@ -16,7 +16,7 @@ interface Props {
 }
 
 export default function AnalysisItem({
-  item: { id, summary, createDate, logo },
+  item: { id, summary, createDate, favicon },
   isDeleteMode,
   onCheck,
   checkedItems,
@@ -27,8 +27,8 @@ export default function AnalysisItem({
   return (
     <ItemContainer to={isDeleteMode ? undefined : `${PATH.HISTORY}/${id}`}>
       <ItemLeft>
-        {logo ? (
-          <Logo src={logo} alt={`${summary} logo`} />
+        {favicon ? (
+          <Logo src={favicon} alt={`${summary} logo`} />
         ) : (
           <EmptyLogo>
             <FiBox />

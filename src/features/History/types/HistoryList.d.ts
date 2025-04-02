@@ -2,7 +2,7 @@ export type HistoryListData = {
   id: number;
   summary: string;
   createDate: string;
-  logo: string;
+  favicon: string;
 };
 
 export type UrlData = {

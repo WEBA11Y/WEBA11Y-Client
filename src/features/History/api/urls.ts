@@ -13,6 +13,7 @@ export const deleteUrls = async (urlIds: number[]) => {
 
 export const getUrls = async () => {
   const response = await httpClient.get("/api/v1/urls");
+
   return response.data;
 };
 

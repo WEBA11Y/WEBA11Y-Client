@@ -19,7 +19,7 @@ export const useUrls = () => {
           id: item.id,
           summary: item.summary,
           createDate: item.createDate,
-          logo: "https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg",
+          favicon: item.favicon,
         })),
     });
   };
