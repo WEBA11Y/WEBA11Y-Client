@@ -1,8 +1,13 @@
 import DetailDashboard from "../features/DetailHistory/components/DetailDashboard";
-import { useRoleAuth } from "../hooks/useRoleAuth";
+import { RoleError } from "../features/Signup/utils/error";
+import useAuthStore from "../store/useAuthStore";
 
 export default function DetailHistoryPage() {
-  useRoleAuth();
+  const { role } = useAuthStore();
+
+  if (role === "guest") {
+    throw new RoleError();
+  }
   return (
     <div>
       <DetailDashboard />

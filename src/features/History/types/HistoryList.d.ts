@@ -1,6 +1,12 @@
-export interface HistoryListData {
+export type HistoryListData = {
   id: number;
-  logo: string;
-  name: string;
-  date: string;
-}
+  summary: string;
+  createDate: string;
+  favicon: string;
+};
+
+export type UrlData = {
+  summary: string;
+  url: string;
+  parentId: number | null;
+};

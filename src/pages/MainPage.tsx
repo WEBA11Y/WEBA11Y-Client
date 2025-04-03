@@ -9,13 +9,18 @@ export default function MainPage() {
   const {
     register,
     formState: { errors },
+    getValues,
   } = useForm<InspectionFormType>();
 
   return (
     <MainContainer>
       <Background />
       <TitleSection />
-      <InspectionForm register={register} errors={errors} />
+      <InspectionForm
+        register={register}
+        errors={errors}
+        getValues={getValues}
+      />
     </MainContainer>
   );
 }

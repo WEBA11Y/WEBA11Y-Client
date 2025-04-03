@@ -5,35 +5,18 @@ import AnalysisItem from "./AnalysisItem";
 import { HistoryListData } from "../types/HistoryList";
 
 interface Props {
-  historyListData: HistoryListData[];
+  sortedList: HistoryListData[];
   isDeleteMode: boolean;
   checkedItems: number[];
   onCheck: (id: number) => void;
+  searchKeyword: string;
 }
-export default function HistoryList({
-  historyListData,
-  isDeleteMode,
-  checkedItems,
-  onCheck,
-}: Props) {
-  // const { useUserUrls, useUrlDetails, useValidateUrl } = useUrls();
-  // const { data: urls } = useUserUrls();
-  // const { data: urls } = useQuery(useUserUrlsOption);
-
-  // const { data: urlDetails } = useUrlDetails(1);
-  // const { data: validate } = useValidateUrl("https://www.parent1.com");
-
+export default function HistoryList({ ...rest }: Props) {
   return (
     <DropshadowCard dropshadow>
       <Container>
-        {historyListData.map((item) => (
-          <AnalysisItem
-            key={item.id}
-            item={item}
-            isDeleteMode={isDeleteMode}
-            checkedItems={checkedItems}
-            onCheck={onCheck}
-          />
+        {rest.sortedList.map((item) => (
+          <AnalysisItem key={item.id} item={item} {...rest} />
         ))}
       </Container>
     </DropshadowCard>

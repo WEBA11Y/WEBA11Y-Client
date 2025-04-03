@@ -1,12 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 
-import {
-  deleteUrls,
-  getUrlDetails,
-  getUrls,
-  registerUrls,
-  validateUrl,
-} from "../api/urls";
+import { deleteUrls, getUrlDetails, getUrls, registerUrls } from "../api/urls";
+import { HistoryListData, UrlData } from "../types/HistoryList";
 
 export const useUrls = () => {
   const queryClient = useQueryClient();
@@ -18,6 +14,13 @@ export const useUrls = () => {
       staleTime: 1000 * 60 * 5,
       refetchOnWindowFocus: false,
       retry: 2,
+      select: (data: HistoryListData[]) =>
+        data.map((item) => ({
+          id: item.id,
+          summary: item.summary,
+          createDate: item.createDate,
+          favicon: item.favicon,
+        })),
     });
   };
 
@@ -30,7 +33,7 @@ export const useUrls = () => {
   };
 
   const useRegisterUrl = () => {
-    return useMutation({
+    return useMutation<{ id: number }, AxiosError, UrlData>({
       mutationFn: registerUrls,
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ["urls"] });
@@ -47,20 +50,10 @@ export const useUrls = () => {
     });
   };
 
-  const useValidateUrl = (url: string) => {
-    return useQuery({
-      queryKey: ["validateUrl", url],
-      queryFn: () => validateUrl(url),
-      enabled: !!url,
-      retry: 1,
-    });
-  };
-
   return {
     useUserUrls,
     useUrlDetails,
     useRegisterUrl,
     useDeleteUrl,
-    useValidateUrl,
   };
 };

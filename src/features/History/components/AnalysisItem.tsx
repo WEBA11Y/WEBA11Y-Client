@@ -1,37 +1,50 @@
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
 import { BsArrowUpRightCircle } from "react-icons/bs";
-import { FiCheckCircle } from "react-icons/fi";
+import { FiCheckCircle, FiBox } from "react-icons/fi";
 
 import { HistoryListData } from "../types/HistoryList";
 import { PATH } from "../../../constants/path";
+import { getHighlightedText } from "../utils/getHighlightedText";
 
 interface Props {
   item: HistoryListData;
   isDeleteMode: boolean;
   checkedItems: number[];
   onCheck: (id: number) => void;
+  searchKeyword: string;
 }
 
 export default function AnalysisItem({
-  item: { id, logo, name, date },
+  item: { id, summary, createDate, favicon },
   isDeleteMode,
   onCheck,
   checkedItems,
+  searchKeyword,
 }: Props) {
   const isChecked = checkedItems.includes(id);
 
   return (
-    <ItemContainer to={`${PATH.HISTORY}/${id}`}>
+    <ItemContainer to={isDeleteMode ? undefined : `${PATH.HISTORY}/${id}`}>
       <ItemLeft>
-        <Logo src={logo} alt={`${name} logo`} />
+        {favicon ? (
+          <Logo src={favicon} alt={`${summary} logo`} />
+        ) : (
+          <EmptyLogo>
+            <FiBox />
+          </EmptyLogo>
+        )}
+
         <TextContainer>
-          <ServiceName>{name}</ServiceName>
-          <Date>{date}</Date>
+          <ServiceName>
+            {getHighlightedText(summary, searchKeyword)}
+          </ServiceName>
+          <Date>{createDate.split("T")[0]}</Date>
         </TextContainer>
       </ItemLeft>
+
       {isDeleteMode ? (
-        <CheckBox isChecked={isChecked} onClick={() => onCheck(id)}>
+        <CheckBox $isChecked={isChecked} onClick={() => onCheck(id)}>
           <FiCheckCircle />
         </CheckBox>
       ) : (
@@ -65,6 +78,17 @@ const Logo = styled.img`
   background-color: ${({ theme }) => theme.colors.neutral[100]};
 `;
 
+const EmptyLogo = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: ${({ theme }) => theme.colors.neutral[400]};
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: ${({ theme }) => theme.colors.neutral[100]};
+`;
+
 const TextContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -90,8 +114,8 @@ const ExternalLink = styled.button`
   align-items: center;
 `;
 
-const CheckBox = styled.button<{ isChecked: boolean }>`
-  color: ${({ theme, isChecked }) =>
-    isChecked ? theme.colors.primary[500] : theme.colors.neutral[500]};
+const CheckBox = styled.button<{ $isChecked: boolean }>`
+  color: ${({ theme, $isChecked }) =>
+    $isChecked ? theme.colors.primary[500] : theme.colors.neutral[500]};
   font-size: 24px;
 `;

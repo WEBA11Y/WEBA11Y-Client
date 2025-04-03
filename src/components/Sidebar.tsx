@@ -1,6 +1,6 @@
-import * as React from "react";
 import { styled } from "styled-components";
 import { Link, useLocation } from "react-router-dom";
+import { useState } from "react";
 import {
   FaChartBar,
   FaHistory,
@@ -13,6 +13,7 @@ import { PATH } from "../constants/path";
 import Typography from "./Typography";
 import Button from "./Button";
 import useAuthStore from "../store/useAuthStore";
+import RegisterModal from "./modal/RegisterModal";
 
 const MENU_ITEMS = [
   {
@@ -42,16 +43,21 @@ const MENU_ITEMS = [
 ];
 
 export default function Sidebar() {
+  const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
+
   const location = useLocation().pathname;
   const { role } = useAuthStore();
   return (
     <SidebarContainer>
+      {isRegisterModalOpen && (
+        <RegisterModal onClose={() => setIsRegisterModalOpen(false)} />
+      )}
       <Menu>
         {MENU_ITEMS.filter((item) => item.allowedRoles.includes(role)).map(
           ({ path, icon, label }) => {
             const isActive = location === path;
             return (
-              <MenuItem key={path} to={path} active={isActive}>
+              <MenuItem key={path} to={path} $active={isActive}>
                 {icon}
                 <Typography
                   variant='text'
@@ -64,7 +70,13 @@ export default function Sidebar() {
           }
         )}
       </Menu>
-      <Button variant='outline' type='button' icon={<FaPlus />} size='large'>
+      <Button
+        variant='outline'
+        type='button'
+        icon={<FaPlus />}
+        size='large'
+        onClick={() => setIsRegisterModalOpen(true)}
+      >
         ADD URL
       </Button>
     </SidebarContainer>
@@ -87,16 +99,16 @@ const Menu = styled.ul`
   width: 100%;
 `;
 
-const MenuItem = styled(Link)<{ active?: boolean }>`
+const MenuItem = styled(Link)<{ $active?: boolean }>`
   display: flex;
   align-items: center;
   padding: 12px;
   border-radius: 8px;
   margin-bottom: 10px;
-  background-color: ${({ active, theme }) =>
-    active ? theme.colors.neutral[100] : "transparent"};
-  color: ${({ active, theme }) =>
-    active ? theme.colors.neutral[800] : theme.colors.neutral[600]};
+  background-color: ${({ $active, theme }) =>
+    $active ? theme.colors.neutral[100] : "transparent"};
+  color: ${({ $active, theme }) =>
+    $active ? theme.colors.neutral[800] : theme.colors.neutral[600]};
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.neutral[100]};
