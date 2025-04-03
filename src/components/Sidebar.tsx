@@ -1,5 +1,6 @@
 import { styled } from "styled-components";
 import { Link, useLocation } from "react-router-dom";
+import { useState } from "react";
 import {
   FaChartBar,
   FaHistory,
@@ -12,6 +13,7 @@ import { PATH } from "../constants/path";
 import Typography from "./Typography";
 import Button from "./Button";
 import useAuthStore from "../store/useAuthStore";
+import RegisterModal from "./modal/RegisterModal";
 
 const MENU_ITEMS = [
   {
@@ -41,10 +43,15 @@ const MENU_ITEMS = [
 ];
 
 export default function Sidebar() {
+  const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
+
   const location = useLocation().pathname;
   const { role } = useAuthStore();
   return (
     <SidebarContainer>
+      {isRegisterModalOpen && (
+        <RegisterModal onClose={() => setIsRegisterModalOpen(false)} />
+      )}
       <Menu>
         {MENU_ITEMS.filter((item) => item.allowedRoles.includes(role)).map(
           ({ path, icon, label }) => {
@@ -63,7 +70,13 @@ export default function Sidebar() {
           }
         )}
       </Menu>
-      <Button variant='outline' type='button' icon={<FaPlus />} size='large'>
+      <Button
+        variant='outline'
+        type='button'
+        icon={<FaPlus />}
+        size='large'
+        onClick={() => setIsRegisterModalOpen(true)}
+      >
         ADD URL
       </Button>
     </SidebarContainer>
