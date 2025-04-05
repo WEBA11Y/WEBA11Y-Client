@@ -7,10 +7,10 @@ import { HistoryListData, UrlData } from "../types/HistoryList";
 export const useUrls = () => {
   const queryClient = useQueryClient();
 
-  const useUserUrls = () => {
+  const useUserUrls = (page: number) => {
     return useQuery({
-      queryKey: ["urls"],
-      queryFn: getUrls,
+      queryKey: ["urls", page],
+      queryFn: () => getUrls(page),
       staleTime: 1000 * 60 * 5,
       refetchOnWindowFocus: false,
       retry: 2,
