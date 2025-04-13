@@ -1,26 +1,35 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 
-import { deleteUrls, getUrlDetails, getUrls, registerUrls } from "../api/urls";
-import { HistoryListData, UrlData } from "../types/HistoryList";
+import {
+  deleteUrls,
+  getUrlDetails,
+  getUrls,
+  registerUrls,
+  testUrls,
+} from "../api/urls";
+import { HistoryListProps, UrlData } from "../types/HistoryList";
 
 export const useUrls = () => {
   const queryClient = useQueryClient();
 
-  const useUserUrls = () => {
+  const useUserUrls = (page: number) => {
     return useQuery({
-      queryKey: ["urls"],
-      queryFn: getUrls,
+      queryKey: ["urls", page],
+      queryFn: () => getUrls(page),
       staleTime: 1000 * 60 * 5,
       refetchOnWindowFocus: false,
       retry: 2,
-      select: (data: HistoryListData[]) =>
-        data.map((item) => ({
+      select: (data: HistoryListProps) => ({
+        content: data.content.map((item) => ({
           id: item.id,
           summary: item.summary,
           createDate: item.createDate,
           favicon: item.favicon,
         })),
+        currentPage: data.currentPage,
+        totalPage: data.totalPage,
+      }),
     });
   };
 
@@ -50,10 +59,18 @@ export const useUrls = () => {
     });
   };
 
+  const useUrlTest = (urlId: number) => {
+    return useQuery({
+      queryKey: ["urlResult", urlId],
+      queryFn: () => testUrls(urlId),
+    });
+  };
+
   return {
     useUserUrls,
     useUrlDetails,
     useRegisterUrl,
     useDeleteUrl,
+    useUrlTest,
   };
 };

@@ -9,18 +9,19 @@ import useAuthStore from "../store/useAuthStore";
 import { RoleError } from "../features/Signup/utils/error";
 import { useHistoryFilter } from "../features/History/hooks/useHistoryFilter";
 import { useHistoryDelete } from "../features/History/hooks/useHistoryDelete";
+import Pagination from "../components/Pagination";
 
 export default function HistoryPage() {
-  // 데이터 무한스크롤/페이지네이션 로직 작성 필요
   const [isModal, setIsModal] = useState(false);
-
+  const [page, setPage] = useState(1);
   const { useUserUrls, useDeleteUrl } = useUrls();
   const { mutate: deleteUrls } = useDeleteUrl();
 
-  const { data: originalList } = useUserUrls();
+  const { data: originalList } = useUserUrls(page);
+  const content = originalList?.content ?? [];
 
   const { sort, setSort, search, setSearch, sortedList } =
-    useHistoryFilter(originalList);
+    useHistoryFilter(content);
   const {
     checkedItems,
     handleCheck,
@@ -48,13 +49,12 @@ export default function HistoryPage() {
           onCancel={() => setIsModal((prev) => !prev)}
         />
       )}
-
       <Header
         mode={toggleDeleteMode}
         isDeleteMode={isDeleteMode}
-        count={originalList?.length}
+        count={content?.length}
       />
-      {originalList?.length ? (
+      {content?.length ? (
         <>
           {!isDeleteMode && (
             <SearchFilterBar
@@ -75,6 +75,7 @@ export default function HistoryPage() {
       ) : (
         <EmptyHistory />
       )}
+      <Pagination originalList={originalList} page={page} setPage={setPage} />
     </Container>
   );
 }
