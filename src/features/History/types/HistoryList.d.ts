@@ -5,6 +5,12 @@ export type HistoryListData = {
   favicon: string;
 };
 
+export type HistoryListProps = {
+  content: HistoryListData[];
+  currentPage: number;
+  totalPage: number;
+};
+
 export type UrlData = {
   summary: string;
   url: string;

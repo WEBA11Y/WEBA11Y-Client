@@ -13,10 +13,19 @@ export const deleteUrls = async (urlIds: number[]) => {
 
 export const getUrls = async (page: number) => {
   const response = await httpClient.get(`/api/v1/urls?page=${page}`);
+  console.log(response.data);
+
   return response.data;
 };
 
 export const getUrlDetails = async (urlId: number) => {
   const response = await httpClient.get(`/api/v1/urls/${urlId}`);
+
   return response.data;
+};
+
+// 검사
+export const testUrls = async (urlId: number) => {
+  const response = await httpClient.post(`/api/v1/urls?urlId=${urlId}`);
+  return response.data.id;
 };
