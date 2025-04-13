@@ -4,7 +4,7 @@ import { styled, css } from "styled-components";
 type Props = {
   size?: "small" | "medium" | "large" | "full";
   variant?: "fill" | "outline" | "fill-outline" | "darkFill";
-  type: "button" | "submit" | "reset";
+  type?: "button" | "submit" | "reset";
   icon?: ReactElement;
   children: ReactNode;
   onClick?: () => void;
@@ -17,7 +17,7 @@ export default function Button({
   variant = "fill",
   icon,
   children,
-  type,
+  type = "button",
   onClick,
   disabled = false,
 }: Props) {

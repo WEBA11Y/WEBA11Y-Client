@@ -1,4 +1,4 @@
 export interface InspectionFormType {
-  serviceName: string;
+  summary: string;
   url: string;
 }

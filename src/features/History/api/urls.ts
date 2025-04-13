@@ -1,39 +1,31 @@
 import httpClient from "../../../api/http";
-
-type UrlData = {
-  summary: string;
-  url: string;
-  parentId: number;
-};
-// const urlData = {
-//   summary: "title",
-//   url: "http://localhost",
-//   parentId: 0,
-// };
+import { UrlData } from "../types/HistoryList";
 
 export const registerUrls = async (urlData: UrlData) => {
   const response = await httpClient.post("/api/v1/urls", urlData);
+  return response.data.id;
+};
+
+export const deleteUrls = async (urlIds: number[]) => {
+  const response = await httpClient.delete(`/api/v1/urls`, { data: urlIds });
   return response.data;
 };
 
-export const deleteUrls = async (urlId: number) => {
-  const response = await httpClient.delete(`/api/v1/urls/${urlId}`);
-  return response.data;
-};
+export const getUrls = async (page: number) => {
+  const response = await httpClient.get(`/api/v1/urls?page=${page}`);
+  console.log(response.data);
 
-export const getUrls = async () => {
-  const response = await httpClient.get("/api/v1/urls");
   return response.data;
 };
 
 export const getUrlDetails = async (urlId: number) => {
   const response = await httpClient.get(`/api/v1/urls/${urlId}`);
+
   return response.data;
 };
 
-export const validateUrl = async (url: string) => {
-  const response = await httpClient.get(`/api/v1/urls/validate`, {
-    params: { url },
-  });
-  return response.data;
+// 검사
+export const testUrls = async (urlId: number) => {
+  const response = await httpClient.post(`/api/v1/urls?urlId=${urlId}`);
+  return response.data.id;
 };

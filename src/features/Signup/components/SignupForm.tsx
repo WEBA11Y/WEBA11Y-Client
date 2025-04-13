@@ -2,6 +2,7 @@ import { useState } from "react";
 import { styled } from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { AxiosError } from "axios";
 
 import { PATH } from "../../../constants/path";
 import Typography from "../../../components/Typography";
@@ -63,9 +64,8 @@ export default function SignupForm() {
           clearErrors("userId");
           setIsUserIdChecked(true);
         },
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        onError: (error: any) => {
-          const statusCode = error.response.status;
+        onError: (error: AxiosError) => {
+          const statusCode = error.response?.status;
           if (statusCode === 409) {
             setError("userId", {
               type: "manual",

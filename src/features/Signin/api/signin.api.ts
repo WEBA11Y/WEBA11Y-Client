@@ -6,5 +6,5 @@ export const signin = async (userData: SigninFormType): Promise<void> => {
   const { login } = useAuthStore.getState();
 
   const response = await httpClient.post("/api/v1/login", userData);
-  login(response.data.accessToken);
+  login(response.data.accessToken, "user");
 };

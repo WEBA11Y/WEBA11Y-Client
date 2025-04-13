@@ -1,72 +1,81 @@
 import { styled } from "styled-components";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { Header, HistoryList, SearchFilterBar } from "../features/History";
-import { HistoryListData } from "../features/History/types/HistoryList";
 import EmptyHistory from "../features/History/components/EmptyHistory";
-
-const data: HistoryListData[] = [
-  {
-    id: 1,
-    logo: "https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg",
-    name: "PawMate",
-    date: "2024.09.08",
-  },
-  {
-    id: 2,
-    logo: "https://upload.wikimedia.org/wikipedia/commons/0/08/Pinterest-logo.png",
-    name: "PawMate",
-    date: "2024.09.08",
-  },
-];
+import { useUrls } from "../features/History/hooks/useUrls";
+import AlertModal from "../components/modal/AlertModal";
+import useAuthStore from "../store/useAuthStore";
+import { RoleError } from "../features/Signup/utils/error";
+import { useHistoryFilter } from "../features/History/hooks/useHistoryFilter";
+import { useHistoryDelete } from "../features/History/hooks/useHistoryDelete";
+import Pagination from "../components/Pagination";
 
 export default function HistoryPage() {
-  const [historyListData, setHistoryListData] =
-    useState<HistoryListData[]>(data);
-  const [checkedItems, setCheckedItems] = useState<number[]>([]);
-  const [isDeleteMode, setIsDeleteMode] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModal, setIsModal] = useState(false);
+  const [page, setPage] = useState(1);
+  const { useUserUrls, useDeleteUrl } = useUrls();
+  const { mutate: deleteUrls } = useDeleteUrl();
 
-  const handleCheck = (id: number) => {
-    setCheckedItems((prev) =>
-      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
-    );
-  };
+  const { data: originalList } = useUserUrls(page);
+  const content = originalList?.content ?? [];
 
-  const toggleDeleteMode = () => {
-    setIsDeleteMode((prev) => !prev);
-  };
+  const { sort, setSort, search, setSearch, sortedList } =
+    useHistoryFilter(content);
+  const {
+    checkedItems,
+    handleCheck,
+    isDeleteMode,
+    setIsDeleteMode,
+    toggleDeleteMode,
+  } = useHistoryDelete(setIsModal);
+  const { role } = useAuthStore();
 
-  useEffect(() => {
-    if (!isDeleteMode) {
-      setCheckedItems([]);
-    }
-  }, [isDeleteMode]);
-
-  const handleSearch = () => {
-    console.log("Search", setHistoryListData, isModalOpen, setIsModalOpen);
-  };
-
-  // const handleDelete = () => {
-  //   if (!checkedItems.length) return;
-  // };
+  if (role === "guest") {
+    throw new RoleError();
+  }
 
   return (
     <Container>
-      <Header mode={toggleDeleteMode} isDeleteMode={isDeleteMode} />
-      {historyListData.length ? (
+      {isModal && (
+        <AlertModal
+          title={`정말 삭제하시겠습니까?`}
+          description={`선택한 ${checkedItems.length}개의 URL을 삭제합니다.`}
+          onConfirm={() => {
+            deleteUrls(checkedItems);
+            setIsDeleteMode((prev) => !prev);
+            setIsModal((prev) => !prev);
+          }}
+          onCancel={() => setIsModal((prev) => !prev)}
+        />
+      )}
+      <Header
+        mode={toggleDeleteMode}
+        isDeleteMode={isDeleteMode}
+        count={content?.length}
+      />
+      {content?.length ? (
         <>
-          {!isDeleteMode && <SearchFilterBar onSubmit={handleSearch} />}
+          {!isDeleteMode && (
+            <SearchFilterBar
+              onSortChange={setSort}
+              currentSort={sort}
+              onSearchChange={setSearch}
+              currentSearchKeyword={search}
+            />
+          )}
           <HistoryList
-            historyListData={historyListData}
+            sortedList={sortedList}
             isDeleteMode={isDeleteMode}
             checkedItems={checkedItems}
             onCheck={handleCheck}
+            searchKeyword={search}
           />
         </>
       ) : (
         <EmptyHistory />
       )}
+      <Pagination originalList={originalList} page={page} setPage={setPage} />
     </Container>
   );
 }

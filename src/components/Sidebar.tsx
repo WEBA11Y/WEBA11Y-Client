@@ -1,5 +1,6 @@
 import { styled } from "styled-components";
 import { Link, useLocation } from "react-router-dom";
+import { useState } from "react";
 import {
   FaChartBar,
   FaHistory,
@@ -11,36 +12,71 @@ import {
 import { PATH } from "../constants/path";
 import Typography from "./Typography";
 import Button from "./Button";
+import useAuthStore from "../store/useAuthStore";
+import RegisterModal from "./modal/RegisterModal";
 
 const MENU_ITEMS = [
-  { path: PATH.DASHBOARD, icon: <FaChartBar />, label: "대시보드" },
-  { path: PATH.HISTORY, icon: <FaHistory />, label: "분석 히스토리" },
-  { path: PATH.GUIDE, icon: <FaQuestionCircle />, label: "도움말 및 가이드" },
-  { path: PATH.SETTINGS, icon: <FaCog />, label: "사용자 설정" },
+  {
+    path: PATH.DASHBOARD,
+    icon: <FaChartBar />,
+    label: "대시보드",
+    allowedRoles: ["user", "guest"],
+  },
+  {
+    path: PATH.HISTORY,
+    icon: <FaHistory />,
+    label: "분석 히스토리",
+    allowedRoles: ["user"],
+  },
+  {
+    path: PATH.GUIDE,
+    icon: <FaQuestionCircle />,
+    label: "도움말 및 가이드",
+    allowedRoles: ["user", "guest"],
+  },
+  {
+    path: PATH.SETTINGS,
+    icon: <FaCog />,
+    label: "사용자 설정",
+    allowedRoles: ["user"],
+  },
 ];
 
 export default function Sidebar() {
-  const location = useLocation().pathname;
+  const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
 
+  const location = useLocation().pathname;
+  const { role } = useAuthStore();
   return (
     <SidebarContainer>
+      {isRegisterModalOpen && (
+        <RegisterModal onClose={() => setIsRegisterModalOpen(false)} />
+      )}
       <Menu>
-        {MENU_ITEMS.map(({ path, icon, label }) => {
-          const isActive = location === path;
-          return (
-            <MenuItem key={path} to={path} active={isActive}>
-              {icon}
-              <Typography
-                variant='text'
-                size={isActive ? "mdBold" : "mdRegular"}
-              >
-                {label}
-              </Typography>
-            </MenuItem>
-          );
-        })}
+        {MENU_ITEMS.filter((item) => item.allowedRoles.includes(role)).map(
+          ({ path, icon, label }) => {
+            const isActive = location === path;
+            return (
+              <MenuItem key={path} to={path} $active={isActive}>
+                {icon}
+                <Typography
+                  variant='text'
+                  size={isActive ? "mdBold" : "mdRegular"}
+                >
+                  {label}
+                </Typography>
+              </MenuItem>
+            );
+          }
+        )}
       </Menu>
-      <Button variant='outline' type='button' icon={<FaPlus />} size='large'>
+      <Button
+        variant='outline'
+        type='button'
+        icon={<FaPlus />}
+        size='large'
+        onClick={() => setIsRegisterModalOpen(true)}
+      >
         ADD URL
       </Button>
     </SidebarContainer>
@@ -63,16 +99,16 @@ const Menu = styled.ul`
   width: 100%;
 `;
 
-const MenuItem = styled(Link)<{ active?: boolean }>`
+const MenuItem = styled(Link)<{ $active?: boolean }>`
   display: flex;
   align-items: center;
   padding: 12px;
   border-radius: 8px;
   margin-bottom: 10px;
-  background-color: ${({ active, theme }) =>
-    active ? theme.colors.neutral[100] : "transparent"};
-  color: ${({ active, theme }) =>
-    active ? theme.colors.neutral[800] : theme.colors.neutral[600]};
+  background-color: ${({ $active, theme }) =>
+    $active ? theme.colors.neutral[100] : "transparent"};
+  color: ${({ $active, theme }) =>
+    $active ? theme.colors.neutral[800] : theme.colors.neutral[600]};
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.neutral[100]};
