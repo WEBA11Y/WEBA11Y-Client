@@ -3,6 +3,7 @@ import { UrlData } from "../types/HistoryList";
 
 export const registerUrls = async (urlData: UrlData) => {
   const response = await httpClient.post("/api/v1/urls", urlData);
+
   return response.data.id;
 };
 
@@ -13,7 +14,6 @@ export const deleteUrls = async (urlIds: number[]) => {
 
 export const getUrls = async (page: number) => {
   const response = await httpClient.get(`/api/v1/urls?page=${page}`);
-  console.log(response.data);
 
   return response.data;
 };
