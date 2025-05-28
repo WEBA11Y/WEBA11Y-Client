@@ -1,17 +1,45 @@
 import { styled } from "styled-components";
+import { useState } from "react";
 
 import InspectionList from "./InspectionList";
 import Button from "../../../components/Button";
 import ServiceHeader from "./ServiceHeader";
 import UrlInputSection from "./UrlInputSection";
 import { StatBox } from "../../RecentInspection";
+import UrlList from "./UrlList";
 
 export default function DetailDashboard() {
+  const [showUrlList, setShowUrlList] = useState(false);
+  const urlList = [
+    {
+      url: "https://kr.pinterest.com ",
+      date: "2024.09.08",
+      isMain: true,
+    },
+    { url: "https://kr.pinterest.com/test01", date: "2024.09.08" },
+    { url: "https://kr.pinterest.com/test02", date: "2024.09.08" },
+    { url: "https://kr.pinterest.com/test01", date: "2024.09.08" },
+    { url: "https://kr.pinterest.com/test02", date: "2024.09.08" },
+    { url: "https://kr.pinterest.com/test01", date: "2024.09.08" },
+    { url: "https://kr.pinterest.com/test02", date: "2024.09.08" },
+    { url: "https://kr.pinterest.com/test01", date: "2024.09.08" },
+    { url: "https://kr.pinterest.com/test02", date: "2024.09.08" },
+    { url: "https://kr.pinterest.com/test01", date: "2024.09.08" },
+    { url: "https://kr.pinterest.com/test02", date: "2024.09.08" },
+  ];
   return (
     <Container>
       <TopSection>
         <ServiceBox>
-          <ServiceHeader />
+          <ServiceHeader
+            showUrlList={showUrlList}
+            setShowUrlList={setShowUrlList}
+            onToggleList={() => {
+              setShowUrlList((prev) => !prev);
+            }}
+          />
+
+          {showUrlList && <UrlList urls={urlList} />}
           <ScoreGrid>
             <StatBox
               title='CRITICAL'
@@ -67,6 +95,7 @@ const BottomSection = styled.div`
 const TopSection = styled.div``;
 
 const ServiceBox = styled.div`
+  position: relative;
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 1rem;

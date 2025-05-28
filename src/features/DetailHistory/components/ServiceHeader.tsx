@@ -1,7 +1,14 @@
 import { styled } from "styled-components";
-import { FiEdit2, FiExternalLink, FiList } from "react-icons/fi";
+import { FiEdit2, FiExternalLink, FiList, FiX } from "react-icons/fi";
 
-export default function ServiceHeader() {
+export default function ServiceHeader({
+  onToggleList,
+  showUrlList,
+}: {
+  onToggleList: () => void;
+  showUrlList: boolean;
+  setShowUrlList: (show: boolean) => void;
+}) {
   return (
     <HeaderWrapper>
       <InfoBox>
@@ -16,8 +23,8 @@ export default function ServiceHeader() {
           </Link>
         </div>
       </InfoBox>
-      <RightBox>
-        <FiList size={20} />
+      <RightBox onClick={onToggleList}>
+        {showUrlList ? <FiX size={20} /> : <FiList size={20} />}
       </RightBox>
     </HeaderWrapper>
   );
@@ -80,4 +87,5 @@ const RightBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 `;
