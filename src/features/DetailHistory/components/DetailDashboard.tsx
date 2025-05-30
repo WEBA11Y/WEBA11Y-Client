@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import InspectionList from "./InspectionList";
 import Button from "../../../components/Button";
@@ -15,6 +15,7 @@ export default function DetailDashboard() {
   const [showUrlList, setShowUrlList] = useState(false);
   const [checkedItems, setCheckedItems] = useState<number[]>([]);
   const [isModal, setIsModal] = useState(false);
+  const navigate = useNavigate();
 
   const { useDeleteUrl, useUrlDetails } = useUrls();
   const { mutate: deleteUrls } = useDeleteUrl();
@@ -83,7 +84,11 @@ export default function DetailDashboard() {
       </TopSection>
       <InspectionList />
       <BottomSection>
-        <Button variant='outline' type='button'>
+        <Button
+          variant='outline'
+          type='button'
+          onClick={() => navigate("/history")}
+        >
           목록으로
         </Button>
         <Button variant='fill' type='button'>
