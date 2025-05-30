@@ -1,18 +1,18 @@
 import { styled } from "styled-components";
-import { FiEdit2, FiExternalLink, FiList, FiX } from "react-icons/fi";
+import { FiEdit2, FiExternalLink, FiList, FiX, FiTrash2 } from "react-icons/fi";
 
 export default function ServiceHeader({
   onToggleList,
   showUrlList,
+  onTrashClick,
 }: {
   onToggleList: () => void;
   showUrlList: boolean;
-  setShowUrlList: (show: boolean) => void;
+  onTrashClick: () => void;
 }) {
   return (
     <HeaderWrapper>
       <InfoBox>
-        {/* 파비콘 */}
         <ServiceIcon>X</ServiceIcon>
         <div>
           <Title>
@@ -23,9 +23,21 @@ export default function ServiceHeader({
           </Link>
         </div>
       </InfoBox>
-      <RightBox onClick={onToggleList}>
-        {showUrlList ? <FiX size={20} /> : <FiList size={20} />}
-      </RightBox>
+
+      {showUrlList ? (
+        <div className='right-boxes'>
+          <RightBox onClick={onToggleList}>
+            <FiX size={20} />
+          </RightBox>
+          <DeleteBox onClick={onTrashClick}>
+            <FiTrash2 size={20} />
+          </DeleteBox>
+        </div>
+      ) : (
+        <RightBox onClick={onToggleList}>
+          <FiList size={20} />
+        </RightBox>
+      )}
     </HeaderWrapper>
   );
 }
@@ -40,6 +52,10 @@ const HeaderWrapper = styled.div`
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
   margin-bottom: 1rem;
   height: 100%;
+  .right-boxes {
+    display: flex;
+    gap: 0.5rem;
+  }
 `;
 
 const InfoBox = styled.div`
@@ -88,4 +104,8 @@ const RightBox = styled.div`
   align-items: center;
   justify-content: center;
   cursor: pointer;
+`;
+const DeleteBox = styled(RightBox)`
+  background: ${({ theme }) => theme.colors.primary[500]};
+  color: ${({ theme }) => theme.colors.common.white};
 `;

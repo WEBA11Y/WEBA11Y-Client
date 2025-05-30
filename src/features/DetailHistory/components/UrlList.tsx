@@ -1,37 +1,48 @@
+import { FiCheckCircle } from "react-icons/fi";
 import { styled } from "styled-components";
-import { MdLockOutline } from "react-icons/md";
 
 interface UrlItem {
+  id: number;
   url: string;
-  date: string;
-  isMain?: boolean;
+  createDate: string;
 }
 
 interface Props {
   urls: UrlItem[];
+  onCheck: (id: number) => void;
+  checkedItems: number[];
 }
 
-export default function UrlList({ urls }: Props) {
+export default function UrlList({ urls, onCheck, checkedItems }: Props) {
   return (
     <ListWrapper>
-      {urls.map((item) => (
-        <ListItem key={item.url}>
-          <div>
-            <strong>{item.url}</strong>
-            <SubText>최신업데이트 : {item.date}</SubText>
-          </div>
-          {item.isMain ? (
-            <LockIcon>
-              <MdLockOutline size={20} />
-            </LockIcon>
-          ) : (
-            <DeleteButton>삭제</DeleteButton>
-          )}
-        </ListItem>
-      ))}
+      {urls.map((item) => {
+        const isChecked = checkedItems.includes(item.id);
+
+        return (
+          <ListItem key={item.id}>
+            <div>
+              <strong>{item.url}</strong>
+              <SubText>
+                최신업데이트: {new Date(item.createDate).toLocaleDateString()}
+              </SubText>
+            </div>
+
+            <CheckBox
+              $isChecked={isChecked}
+              onClick={() => {
+                onCheck(item.id);
+              }}
+            >
+              <FiCheckCircle size={20} />
+            </CheckBox>
+          </ListItem>
+        );
+      })}
     </ListWrapper>
   );
 }
+
 const ListWrapper = styled.div`
   position: absolute;
   top: 100%;
@@ -59,11 +70,8 @@ const SubText = styled.div`
   color: ${({ theme }) => theme.colors.neutral[800]};
 `;
 
-const DeleteButton = styled.button`
-  color: ${({ theme }) => theme.colors.primary[500]};
-  font-size: 0.875rem;
-`;
-
-const LockIcon = styled.div`
-  color: ${({ theme }) => theme.colors.neutral[400]};
+const CheckBox = styled.button<{ $isChecked: boolean }>`
+  color: ${({ theme, $isChecked }) =>
+    $isChecked ? theme.colors.primary[500] : theme.colors.neutral[500]};
+  font-size: 24px;
 `;
