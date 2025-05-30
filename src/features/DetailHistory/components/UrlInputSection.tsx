@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { FiRefreshCw, FiPlus } from "react-icons/fi";
 
+import AddSubUrlModal from "../../../components/modal/AddSubUrlModal";
+
 const allUrls = [
   "https://kr.pinterest.com/aa",
   "https://kr.pinterest.com/bb",
@@ -18,6 +20,7 @@ export default function UrlInputSection() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [filteredList, setFilteredList] = useState<string[]>([]);
   const [previousValidUrl, setPreviousValidUrl] = useState(baseUrl);
+  const [isEditOpen, setIsEditOpen] = useState(false);
 
   const urlBoxRef = useRef<HTMLDivElement>(null);
 
@@ -121,9 +124,15 @@ export default function UrlInputSection() {
         )}
       </UrlBox>
 
-      <AddButton>
+      <AddButton onClick={() => setIsEditOpen(true)}>
         <FiPlus size={16} /> ADD SUB URL
       </AddButton>
+      {isEditOpen && (
+        <AddSubUrlModal
+          currentUrl={currentUrl}
+          onClose={() => setIsEditOpen(false)}
+        />
+      )}
     </Section>
   );
 }
