@@ -5,10 +5,12 @@ export default function ServiceHeader({
   onToggleList,
   showUrlList,
   onTrashClick,
+  url,
 }: {
   onToggleList: () => void;
   showUrlList: boolean;
   onTrashClick: () => void;
+  url: string;
 }) {
   return (
     <HeaderWrapper>
@@ -18,7 +20,7 @@ export default function ServiceHeader({
           <Title>
             웹접근성 서비스 <FiEdit2 size={16} />
           </Title>
-          <Link href='#'>
+          <Link href={url}>
             서비스 링크 <FiExternalLink size={14} />
           </Link>
         </div>

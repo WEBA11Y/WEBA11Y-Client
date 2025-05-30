@@ -48,6 +48,7 @@ export default function DetailDashboard() {
               setCheckedItems([]);
             }}
             onTrashClick={openModal}
+            url={data?.url}
           />
           {showUrlList && (
             <UrlList
