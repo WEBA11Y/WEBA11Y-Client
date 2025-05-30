@@ -16,3 +16,14 @@ export type UrlData = {
   url: string;
   parentId: number | null;
 };
+
+export interface UrlDetail {
+  id: number;
+  summary: string;
+  url: string;
+  favicon: string;
+  parentId: number | null;
+  child: UrlDetail[];
+  createDate: string;
+  updateDate: string;
+}

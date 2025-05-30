@@ -1,46 +1,81 @@
 import { styled } from "styled-components";
 import { FiEdit2, FiExternalLink, FiList, FiX, FiTrash2 } from "react-icons/fi";
+import { useState } from "react";
+
+import EditModal from "../../../components/modal/EditModal";
+
+interface Props {
+  onToggleList: () => void;
+  showUrlList: boolean;
+  onTrashClick: () => void;
+  url: string;
+  urlId: number;
+  summary: string;
+  parentId: number;
+  favicon: string;
+}
 
 export default function ServiceHeader({
   onToggleList,
   showUrlList,
   onTrashClick,
   url,
-}: {
-  onToggleList: () => void;
-  showUrlList: boolean;
-  onTrashClick: () => void;
-  url: string;
-}) {
-  return (
-    <HeaderWrapper>
-      <InfoBox>
-        <ServiceIcon>X</ServiceIcon>
-        <div>
-          <Title>
-            웹접근성 서비스 <FiEdit2 size={16} />
-          </Title>
-          <Link href={url}>
-            서비스 링크 <FiExternalLink size={14} />
-          </Link>
-        </div>
-      </InfoBox>
+  urlId,
+  summary,
+  parentId,
+  favicon,
+}: Props) {
+  const [isEditOpen, setIsEditOpen] = useState(false);
 
-      {showUrlList ? (
-        <div className='right-boxes'>
-          <RightBox onClick={onToggleList}>
-            <FiX size={20} />
+  return (
+    <>
+      <HeaderWrapper>
+        <InfoBox>
+          <ServiceIcon>
+            <Logo src={favicon} alt={`${summary} logo`} />
+          </ServiceIcon>
+          <div>
+            <Title>
+              {summary}
+              <EditButton
+                onClick={() => setIsEditOpen(true)}
+                aria-label='서비스명 변경'
+              >
+                <FiEdit2 size={16} />
+              </EditButton>
+            </Title>
+            <Link href={url} target='_blank' rel='noopener noreferrer'>
+              서비스 링크 <FiExternalLink size={14} />
+            </Link>
+          </div>
+        </InfoBox>
+
+        {showUrlList ? (
+          <div className='right-boxes'>
+            <RightBox onClick={onToggleList} aria-label='URL 목록 닫기'>
+              <FiX size={20} />
+            </RightBox>
+            <DeleteBox onClick={onTrashClick} aria-label='선택 URL 삭제'>
+              <FiTrash2 size={20} />
+            </DeleteBox>
+          </div>
+        ) : (
+          <RightBox onClick={onToggleList} aria-label='URL 목록 열기'>
+            <FiList size={20} />
           </RightBox>
-          <DeleteBox onClick={onTrashClick}>
-            <FiTrash2 size={20} />
-          </DeleteBox>
-        </div>
-      ) : (
-        <RightBox onClick={onToggleList}>
-          <FiList size={20} />
-        </RightBox>
+        )}
+      </HeaderWrapper>
+
+      {isEditOpen && (
+        <EditModal
+          onClose={() => setIsEditOpen(false)}
+          urlId={urlId}
+          summary={summary}
+          parentId={parentId}
+          url={url}
+        />
       )}
-    </HeaderWrapper>
+    </>
   );
 }
 
@@ -69,8 +104,7 @@ const InfoBox = styled.div`
 const ServiceIcon = styled.div`
   width: 48px;
   height: 48px;
-  background: ${({ theme }) => theme.colors.common.black};
-  color: ${({ theme }) => theme.colors.common.white};
+  border: 1px solid ${({ theme }) => theme.colors.neutral[300]};
   border-radius: 0.75rem;
   display: flex;
   align-items: center;
@@ -110,4 +144,20 @@ const RightBox = styled.div`
 const DeleteBox = styled(RightBox)`
   background: ${({ theme }) => theme.colors.primary[500]};
   color: ${({ theme }) => theme.colors.common.white};
+`;
+
+const EditButton = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: ${({ theme }) => theme.colors.neutral[700]};
+  display: flex;
+  align-items: center;
+`;
+
+const Logo = styled.img`
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
 `;

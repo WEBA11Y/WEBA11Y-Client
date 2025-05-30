@@ -7,8 +7,9 @@ import {
   getUrls,
   registerUrls,
   testUrls,
+  updateUrl,
 } from "../api/urls";
-import { HistoryListProps, UrlData } from "../types/HistoryList";
+import { HistoryListProps, UrlData, UrlDetail } from "../types/HistoryList";
 
 export const useUrls = () => {
   const queryClient = useQueryClient();
@@ -66,11 +67,34 @@ export const useUrls = () => {
     });
   };
 
+  const useUpdateUrl = () => {
+    return useMutation({
+      mutationFn: ({
+        id,
+        data,
+      }: {
+        id: number;
+        data: { summary: string; parentId: number; url: string };
+      }) => updateUrl(id, data),
+
+      onSuccess: (_, { id, data }) => {
+        queryClient.setQueryData<UrlDetail>(["url", id], (old) => {
+          if (!old) return old;
+          return {
+            ...old,
+            summary: data.summary,
+          };
+        });
+      },
+    });
+  };
+
   return {
     useUserUrls,
     useUrlDetails,
     useRegisterUrl,
     useDeleteUrl,
     useUrlTest,
+    useUpdateUrl,
   };
 };

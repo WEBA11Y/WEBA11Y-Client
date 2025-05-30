@@ -21,6 +21,7 @@ export default function DetailDashboard() {
   const { mutate: deleteUrls } = useDeleteUrl();
   const { history_id: historyId } = useParams();
   const { data } = useUrlDetails(Number(historyId));
+
   const childUrls = data?.child ?? [];
 
   const handleCheck = (id: number) => {
@@ -44,12 +45,13 @@ export default function DetailDashboard() {
         <ServiceBox>
           <ServiceHeader
             showUrlList={showUrlList}
-            onToggleList={() => {
-              setShowUrlList((prev) => !prev);
-              setCheckedItems([]);
-            }}
+            onToggleList={() => setShowUrlList((prev) => !prev)}
             onTrashClick={openModal}
-            url={data?.url}
+            url={data?.url ?? ""}
+            urlId={data?.id ?? 0}
+            summary={data?.summary ?? ""}
+            parentId={data?.parentId ?? 0}
+            favicon={data?.favicon ?? ""}
           />
           {showUrlList && (
             <UrlList
