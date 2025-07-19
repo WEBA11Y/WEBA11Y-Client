@@ -32,10 +32,15 @@ export default function Summary() {
           </DetailButton>
         </Header>
         <StatsContainer>
-          <StatBox title='실패' value={1} color='red' showIcon='failure' />
-          <StatBox title='검토' value={2} color='yellow' showIcon='review' />
           <StatBox
-            title='권장'
+            title='총 위반 갯수'
+            value={1}
+            color='red'
+            showIcon='failure'
+          />
+          <StatBox title='미수정' value={2} color='yellow' showIcon='review' />
+          <StatBox
+            title='수정완료'
             value={3}
             color='blue'
             showIcon='recommoendation'
