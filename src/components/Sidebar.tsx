@@ -4,8 +4,8 @@ import { useState } from "react";
 import {
   FaChartBar,
   FaHistory,
-  FaQuestionCircle,
-  FaCog,
+  // FaQuestionCircle,
+  // FaCog,
   FaPlus,
 } from "react-icons/fa";
 
@@ -28,18 +28,18 @@ const MENU_ITEMS = [
     label: "분석 히스토리",
     allowedRoles: ["user"],
   },
-  {
-    path: PATH.GUIDE,
-    icon: <FaQuestionCircle />,
-    label: "도움말 및 가이드",
-    allowedRoles: ["user", "guest"],
-  },
-  {
-    path: PATH.SETTINGS,
-    icon: <FaCog />,
-    label: "사용자 설정",
-    allowedRoles: ["user"],
-  },
+  // {
+  //   path: PATH.GUIDE,
+  //   icon: <FaQuestionCircle />,
+  //   label: "도움말 및 가이드",
+  //   allowedRoles: ["user", "guest"],
+  // },
+  // {
+  //   path: PATH.SETTINGS,
+  //   icon: <FaCog />,
+  //   label: "사용자 설정",
+  //   allowedRoles: ["user"],
+  // },
 ];
 
 export default function Sidebar() {
