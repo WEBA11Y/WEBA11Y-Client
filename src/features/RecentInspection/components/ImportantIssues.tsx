@@ -1,5 +1,4 @@
 import { styled } from "styled-components";
-import { FiAlertCircle } from "react-icons/fi";
 
 import DropshadowCard from "../../../components/DropshadowCard";
 import Typography from "../../../components/Typography";
@@ -27,7 +26,6 @@ export default function ImportantIssues() {
               <Typography variant='text' size='mdRegular'>
                 {`${id}. ${text}`}
               </Typography>
-              <FiAlertCircle />
             </Item>
           );
         })}

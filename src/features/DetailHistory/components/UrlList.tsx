@@ -16,29 +16,33 @@ interface Props {
 export default function UrlList({ urls, onCheck, checkedItems }: Props) {
   return (
     <ListWrapper>
-      {urls.map((item) => {
-        const isChecked = checkedItems.includes(item.id);
+      {urls.length === 0 ? (
+        <EmptyMessage>등록된 URL이 없습니다.</EmptyMessage>
+      ) : (
+        urls.map((item) => {
+          const isChecked = checkedItems.includes(item.id);
 
-        return (
-          <ListItem key={item.id}>
-            <div>
-              <strong>{item.url}</strong>
-              <SubText>
-                최신업데이트: {new Date(item.createDate).toLocaleDateString()}
-              </SubText>
-            </div>
+          return (
+            <ListItem key={item.id}>
+              <div>
+                <strong>{item.url}</strong>
+                <SubText>
+                  최신업데이트: {new Date(item.createDate).toLocaleDateString()}
+                </SubText>
+              </div>
 
-            <CheckBox
-              $isChecked={isChecked}
-              onClick={() => {
-                onCheck(item.id);
-              }}
-            >
-              <FiCheckCircle size={20} />
-            </CheckBox>
-          </ListItem>
-        );
-      })}
+              <CheckBox
+                $isChecked={isChecked}
+                onClick={() => {
+                  onCheck(item.id);
+                }}
+              >
+                <FiCheckCircle size={20} />
+              </CheckBox>
+            </ListItem>
+          );
+        })
+      )}
     </ListWrapper>
   );
 }
@@ -46,15 +50,15 @@ export default function UrlList({ urls, onCheck, checkedItems }: Props) {
 const ListWrapper = styled.div`
   position: absolute;
   top: 100%;
+  left: 0;
+  width: 100%;
   padding: 1rem;
   background: ${({ theme }) => theme.colors.common.white};
   border-radius: 1rem;
   margin-top: 1rem;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
   z-index: 1000;
-  width: 100%;
-  max-width: 400px;
-  height: 400px;
+  max-height: 400px;
   overflow-y: auto;
 `;
 
@@ -74,4 +78,11 @@ const CheckBox = styled.button<{ $isChecked: boolean }>`
   color: ${({ theme, $isChecked }) =>
     $isChecked ? theme.colors.primary[500] : theme.colors.neutral[500]};
   font-size: 24px;
+`;
+
+const EmptyMessage = styled.div`
+  padding: 2rem 1rem;
+  text-align: center;
+  color: ${({ theme }) => theme.colors.neutral[500]};
+  font-size: 0.875rem;
 `;

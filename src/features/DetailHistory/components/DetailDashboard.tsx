@@ -38,48 +38,49 @@ export default function DetailDashboard() {
     setIsModal(false);
     setCheckedItems([]);
   };
-
   return (
     <Container>
       <TopSection>
         <ServiceBox>
-          <ServiceHeader
-            showUrlList={showUrlList}
-            onToggleList={() => setShowUrlList((prev) => !prev)}
-            onTrashClick={openModal}
-            url={data?.url ?? ""}
-            urlId={data?.id ?? 0}
-            summary={data?.summary ?? ""}
-            parentId={data?.parentId ?? 0}
-            favicon={data?.favicon ?? ""}
-          />
-          {showUrlList && (
-            <UrlList
-              urls={childUrls}
-              onCheck={handleCheck}
-              checkedItems={checkedItems}
+          <ServiceHeaderWrapper>
+            <ServiceHeader
+              showUrlList={showUrlList}
+              onToggleList={() => setShowUrlList((prev) => !prev)}
+              onTrashClick={openModal}
+              url={data?.url ?? ""}
+              urlId={data?.id ?? 0}
+              summary={data?.summary ?? ""}
+              parentId={data?.parentId ?? 0}
+              favicon={data?.favicon ?? ""}
             />
-          )}
+            {showUrlList && (
+              <UrlList
+                urls={childUrls}
+                onCheck={handleCheck}
+                checkedItems={checkedItems}
+              />
+            )}
+          </ServiceHeaderWrapper>
+
           <ScoreGrid>
             <StatBox
-              title='CRITICAL'
+              title='총 위반 갯수'
               value={1}
               color='red'
               showIcon='failure'
             />
             <StatBox
-              title='SERIOUS'
+              title='미수정'
               value={2}
               color='yellow'
               showIcon='review'
             />
             <StatBox
-              title='MODERATE'
+              title='수정완료'
               value={3}
               color='blue'
               showIcon='checked'
             />
-            <StatBox title='MINOR' value={4} color='black' showIcon='null' />
           </ScoreGrid>
         </ServiceBox>
         <UrlInputSection />
@@ -118,6 +119,10 @@ const Container = styled.div`
   gap: 15px;
 `;
 
+const ServiceHeaderWrapper = styled.div`
+  position: relative;
+`;
+
 const BottomSection = styled.div`
   display: flex;
   justify-content: flex-end;
@@ -129,7 +134,7 @@ const TopSection = styled.div``;
 const ServiceBox = styled.div`
   position: relative;
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 1rem;
 `;
 

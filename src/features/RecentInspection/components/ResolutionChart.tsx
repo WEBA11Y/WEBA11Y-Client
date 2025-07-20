@@ -10,9 +10,10 @@ export default function ResolutionChart() {
         해결 현황
       </Typography>
       <ChartContainer>
-        <HalfCircleProgress label='실패' value={8} total={20} color='#E63946' />
-        <HalfCircleProgress label='검토' value={8} total={20} color='#FFC107' />
-        <HalfCircleProgress label='권장' value={8} total={20} color='#1E3A8A' />
+        <HalfCircleProgress label='심각' value={8} total={20} color='#E63946' />
+        <HalfCircleProgress label='중대' value={8} total={20} color='#FFC107' />
+        <HalfCircleProgress label='중간' value={8} total={20} color='#1E3A8A' />
+        <HalfCircleProgress label='사소' value={8} total={20} color='#00000' />
       </ChartContainer>
     </Card>
   );

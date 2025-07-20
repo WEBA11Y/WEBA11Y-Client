@@ -5,9 +5,8 @@ import DropshadowCard from "../../../components/DropshadowCard";
 import Select from "../../../components/Select";
 import { mockRecentInspection } from "../mock";
 
-export const fetchCategory = async () => {
+const fetchCategory = async () => {
   return [
-    { label: "유형", value: "유형" },
     { label: "중요도", value: "중요도" },
     { label: "단계", value: "단계" },
   ];
@@ -18,7 +17,7 @@ export default function IssueStatus() {
     <DropshadowCard dropshadow>
       <TopContent>
         <Typography variant='text' size='mdBold'>
-          유형별 현황
+          카테고리별 현황
         </Typography>
         <Select
           name='결과분류'

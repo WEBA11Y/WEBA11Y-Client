@@ -2,6 +2,7 @@ import { styled } from "styled-components";
 import { Link } from "react-router-dom";
 import { BsArrowUpRightCircle } from "react-icons/bs";
 import { FiCheckCircle, FiBox } from "react-icons/fi";
+import { useEffect, useState } from "react";
 
 import { HistoryListData } from "../types/HistoryList";
 import { PATH } from "../../../constants/path";
@@ -23,15 +24,24 @@ export default function AnalysisItem({
   searchKeyword,
 }: Props) {
   const isChecked = checkedItems.includes(id);
+  const [logoLoaded, setLogoLoaded] = useState(true);
+
+  useEffect(() => {
+    setLogoLoaded(true);
+  }, [favicon]);
 
   return (
     <ItemContainer to={isDeleteMode ? undefined : `${PATH.HISTORY}/${id}`}>
       <ItemLeft>
-        {favicon ? (
-          <Logo src={favicon} alt={`${summary} logo`} />
+        {favicon && logoLoaded ? (
+          <Logo
+            src={favicon}
+            alt={`${summary} logo`}
+            onError={() => setLogoLoaded(false)}
+          />
         ) : (
           <EmptyLogo>
-            <FiBox />
+            <FiBox size={20} />
           </EmptyLogo>
         )}
 

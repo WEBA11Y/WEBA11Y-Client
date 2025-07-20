@@ -1,6 +1,13 @@
 import { styled } from "styled-components";
-import { FiEdit2, FiExternalLink, FiList, FiX, FiTrash2 } from "react-icons/fi";
-import { useState } from "react";
+import {
+  FiEdit2,
+  FiExternalLink,
+  FiList,
+  FiX,
+  FiTrash2,
+  FiBox,
+} from "react-icons/fi";
+import { useEffect, useState } from "react";
 
 import EditModal from "../../../components/modal/EditModal";
 
@@ -25,14 +32,29 @@ export default function ServiceHeader({
   parentId,
   favicon,
 }: Props) {
-  const [isEditOpen, setIsEditOpen] = useState(false);
+  const [logoLoaded, setLogoLoaded] = useState(true);
 
+  useEffect(() => {
+    setLogoLoaded(true);
+  }, [favicon]);
+
+  const [isEditOpen, setIsEditOpen] = useState(false);
   return (
     <>
       <HeaderWrapper>
         <InfoBox>
           <ServiceIcon>
-            <Logo src={favicon} alt={`${summary} logo`} />
+            {favicon && logoLoaded ? (
+              <Logo
+                src={favicon}
+                alt={`${summary} logo`}
+                onError={() => setLogoLoaded(false)}
+              />
+            ) : (
+              <EmptyLogo>
+                <FiBox size={20} />
+              </EmptyLogo>
+            )}
           </ServiceIcon>
           <div>
             <Title>
@@ -160,4 +182,15 @@ const Logo = styled.img`
   width: 32px;
   height: 32px;
   border-radius: 50%;
+`;
+
+const EmptyLogo = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: ${({ theme }) => theme.colors.neutral[400]};
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: ${({ theme }) => theme.colors.neutral[100]};
 `;
