@@ -24,7 +24,7 @@ export const useUrls = () => {
       select: (data: HistoryListProps) => ({
         content: data.content.map((item) => ({
           id: item.id,
-          summary: item.summary,
+          description: item.description,
           createDate: item.createDate,
           favicon: item.favicon,
         })),
@@ -74,7 +74,7 @@ export const useUrls = () => {
         data,
       }: {
         id: number;
-        data: { summary: string; parentId: number; url: string };
+        data: { description: string; parentId: number; url: string };
       }) => updateUrl(id, data),
 
       onSuccess: (_, { id, data }) => {
@@ -82,7 +82,7 @@ export const useUrls = () => {
           if (!old) return old;
           return {
             ...old,
-            summary: data.summary,
+            description: data.description,
           };
         });
       },

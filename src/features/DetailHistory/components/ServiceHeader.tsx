@@ -17,7 +17,7 @@ interface Props {
   onTrashClick: () => void;
   url: string;
   urlId: number;
-  summary: string;
+  description: string;
   parentId: number;
   favicon: string;
 }
@@ -28,7 +28,7 @@ export default function ServiceHeader({
   onTrashClick,
   url,
   urlId,
-  summary,
+  description,
   parentId,
   favicon,
 }: Props) {
@@ -47,7 +47,7 @@ export default function ServiceHeader({
             {favicon && logoLoaded ? (
               <Logo
                 src={favicon}
-                alt={`${summary} logo`}
+                alt={`${description} logo`}
                 onError={() => setLogoLoaded(false)}
               />
             ) : (
@@ -58,7 +58,7 @@ export default function ServiceHeader({
           </ServiceIcon>
           <div>
             <Title>
-              {summary}
+              {description}
               <EditButton
                 onClick={() => setIsEditOpen(true)}
                 aria-label='서비스명 변경'
@@ -92,7 +92,7 @@ export default function ServiceHeader({
         <EditModal
           onClose={() => setIsEditOpen(false)}
           urlId={urlId}
-          summary={summary}
+          description={description}
           parentId={parentId}
           url={url}
         />

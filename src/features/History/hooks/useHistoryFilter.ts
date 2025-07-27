@@ -9,11 +9,10 @@ export const useHistoryFilter = (originalList: HistoryListData[] = []) => {
   const [search, setSearch] = useState<string>("");
 
   const debounceSearch = useDebounce(search, 300);
-
   const filteredData = originalList?.filter((item) =>
-    item.summary.toLowerCase().includes(debounceSearch.toLowerCase())
+    item.description.toLowerCase().includes(debounceSearch.toLowerCase())
   );
-
+  console.log(originalList);
   const sortedList = getSortedList(filteredData, sort);
 
   return {

@@ -3,7 +3,7 @@ export interface ResultData {
   inspectionItems: string;
   assessmentLevel: string;
   importance: string;
-  summary: string;
+  description: string;
   codeLine: string;
   createDate: string;
   updateDate: string;

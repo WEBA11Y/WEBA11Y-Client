@@ -17,7 +17,7 @@ interface Props {
 }
 
 export default function AnalysisItem({
-  item: { id, summary, createDate, favicon },
+  item: { id, description, createDate, favicon },
   isDeleteMode,
   onCheck,
   checkedItems,
@@ -36,7 +36,7 @@ export default function AnalysisItem({
         {favicon && logoLoaded ? (
           <Logo
             src={favicon}
-            alt={`${summary} logo`}
+            alt={`${description} logo`}
             onError={() => setLogoLoaded(false)}
           />
         ) : (
@@ -47,7 +47,7 @@ export default function AnalysisItem({
 
         <TextContainer>
           <ServiceName>
-            {getHighlightedText(summary, searchKeyword)}
+            {getHighlightedText(description, searchKeyword)}
           </ServiceName>
           <Date>{createDate.split("T")[0]}</Date>
         </TextContainer>

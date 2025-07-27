@@ -11,7 +11,7 @@ import Button from "../Button";
 interface Props {
   onClose: () => void;
   urlId: number;
-  summary: string;
+  description: string;
   parentId: number;
   url: string;
 }
@@ -19,7 +19,7 @@ interface Props {
 export default function EditModal({
   onClose,
   urlId,
-  summary,
+  description,
   parentId,
   url,
 }: Props) {
@@ -32,20 +32,17 @@ export default function EditModal({
     watch,
     formState: { isSubmitting },
   } = useForm({
-    defaultValues: { summary },
+    defaultValues: { description },
   });
 
-  const watchedSummary = watch("summary", "");
+  const watcheddescription = watch("description", "");
 
   const onSubmit = () => {
     updateUrl(
-      { id: urlId, data: { summary: watchedSummary, parentId, url } },
+      { id: urlId, data: { description: watcheddescription, parentId, url } },
       {
         onSuccess: () => {
           onClose();
-        },
-        onError: (err) => {
-          console.error("서비스명 변경 실패", err);
         },
       }
     );
@@ -65,7 +62,7 @@ export default function EditModal({
             <form onSubmit={handleSubmit(onSubmit)}>
               <Input
                 type='text'
-                name='summary'
+                name='description'
                 label='서비스 명'
                 placeholder='서비스 명을 작성해주세요'
                 register={register}
@@ -74,7 +71,7 @@ export default function EditModal({
                 type='submit'
                 size='full'
                 variant='darkFill'
-                disabled={!watchedSummary.trim() || isSubmitting}
+                disabled={!watcheddescription.trim() || isSubmitting}
               >
                 변경하기
               </Button>

@@ -31,7 +31,7 @@ export const testUrls = async (urlId: number) => {
 
 export const updateUrl = async (
   id: number,
-  body: { summary: string; parentId: number; url: string }
+  body: { description: string; parentId: number; url: string }
 ) => {
   const response = await httpClient.put(`/api/v1/urls/${id}`, body);
   return response.data;

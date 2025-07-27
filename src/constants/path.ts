@@ -7,4 +7,5 @@ export const PATH = {
   DETAIL_HISTORY: "/history/:history_id",
   GUIDE: "/guide",
   SETTINGS: "/settings",
+  STREAM: "/stream/:urlId",
 } as const;

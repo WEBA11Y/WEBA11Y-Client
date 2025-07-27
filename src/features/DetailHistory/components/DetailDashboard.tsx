@@ -49,7 +49,7 @@ export default function DetailDashboard() {
               onTrashClick={openModal}
               url={data?.url ?? ""}
               urlId={data?.id ?? 0}
-              summary={data?.summary ?? ""}
+              description={data?.description ?? ""}
               parentId={data?.parentId ?? 0}
               favicon={data?.favicon ?? ""}
             />

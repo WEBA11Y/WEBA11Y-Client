@@ -13,7 +13,9 @@ export const getSortedList = (data: HistoryListData[] = [], sort: string) => {
           new Date(a.createDate).getTime() - new Date(b.createDate).getTime()
       );
     case "name":
-      return [...data].sort((a, b) => a.summary.localeCompare(b.summary));
+      return [...data].sort((a, b) =>
+        a.description.localeCompare(b.description)
+      );
     default:
       return data;
   }
