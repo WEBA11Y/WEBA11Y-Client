@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import { styled } from "styled-components";
 import { FiAlertTriangle } from "react-icons/fi";
 import { AiOutlineCloseCircle, AiOutlineCheckCircle } from "react-icons/ai";
 
@@ -27,9 +27,9 @@ export default function StatBox({
           <AiOutlineCloseCircle fill='#E63946' />
         ) : showIcon === "review" ? (
           <FiAlertTriangle stroke='#FFC947' />
-        ) : (
+        ) : showIcon === "checked" ? (
           <AiOutlineCheckCircle fill='#2A6F97' />
-        )}
+        ) : null}
       </Header>
       <ValueContainer>
         <Value>{value}</Value>
@@ -55,6 +55,7 @@ const Header = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 5px;
+  gap: 10px;
   svg {
     font-size: 25px;
   }
@@ -86,5 +87,7 @@ const Dot = styled.span<{ color: string }>`
       ? theme.colors.primary[500]
       : color === "yellow"
         ? theme.colors.secondary.yellow[500]
-        : theme.colors.secondary.blue[500]};
+        : color === "blue"
+          ? theme.colors.secondary.blue[500]
+          : theme.colors.common.black};
 `;

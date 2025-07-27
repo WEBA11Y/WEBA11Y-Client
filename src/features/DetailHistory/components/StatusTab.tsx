@@ -29,7 +29,7 @@ export default function StatusTab({
       {tabs.map((tab) => (
         <TabItem
           key={tab.label}
-          active={activeTab === tab.label}
+          $active={activeTab === tab.label}
           onClick={() => handleTabClick(tab.label)}
         >
           {tab.label}({tab.count})
@@ -45,19 +45,19 @@ const TabContainer = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.colors.neutral[300]};
 `;
 
-const TabItem = styled.button<{ active: boolean }>`
+const TabItem = styled.button<{ $active: boolean }>`
   font-size: 16px;
-  font-weight: ${({ active }) => (active ? "bold" : "normal")};
-  color: ${({ theme, active }) =>
-    active ? theme.colors.neutral[900] : theme.colors.neutral[500]};
+  font-weight: ${({ $active }) => ($active ? "bold" : "normal")};
+  color: ${({ theme, $active }) =>
+    $active ? theme.colors.neutral[900] : theme.colors.neutral[500]};
   padding: 10px;
   border: none;
   background: none;
   cursor: pointer;
   position: relative;
 
-  ${({ active, theme }) =>
-    active &&
+  ${({ $active, theme }) =>
+    $active &&
     `
     border-bottom: 2px solid ${theme.colors.primary[500]};
   `}

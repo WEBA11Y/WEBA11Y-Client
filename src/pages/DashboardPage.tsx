@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import { useEffect } from "react";
 
 import {
   RecentInspectionResult,
@@ -8,8 +9,12 @@ import {
   URLList,
   Summary,
 } from "../features/RecentInspection";
+import { getDetailUrls } from "../features/RecentInspection/api/urls";
 
 export default function Dashboard() {
+  useEffect(() => {
+    getDetailUrls(1);
+  });
   return (
     <Container>
       <RecentInspectionResult />

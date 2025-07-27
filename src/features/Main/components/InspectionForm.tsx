@@ -30,27 +30,42 @@ export default function InspectionForm({
   const registerUrl = useRegisterUrl();
 
   const handleSubmit = () => {
-    const { summary, url } = getValues();
-    if (!summary || !url)
-      return showErrorToast("서비스명과 URL을 모두 입력해주세요");
+    const { description, url } = getValues();
+
+    if (!description?.trim()) {
+      return showErrorToast("서비스명을 입력해주세요");
+    }
+    if (!url?.trim()) {
+      return showErrorToast("URL을 입력해주세요");
+    }
+
     registerUrl.mutate(
       {
-        summary,
-        url,
+        description: description.trim(),
+        url: url.trim(),
         parentId: null,
       },
       {
-        onSuccess: (id) => {
-          navigate(`/history/${id}`);
+        onSuccess: (data) => {
+          const id = typeof data === "object" && data?.id ? data.id : data;
+          if (id) {
+            navigate(`/stream/${id}`);
+          } else {
+            showErrorToast("등록은 완료되었지만 페이지 이동에 실패했습니다.");
+          }
         },
         onError: (error: AxiosError) => {
-          if (error.response?.status === 400) {
+          console.log("Error:", error);
+          if (error?.response?.status === 400) {
             showErrorToast("URL 형식이 올바르지 않습니다.");
-          } else if (error.response?.status === 409) {
+          } else if (error?.response?.status === 409) {
             // Q.error 값에서 데이터를 가지고 와도 되는건가?
             const data = error.response.data as { urlId: number };
             setUrlId(data.urlId);
+
             setIsDuplicateModalOpen(true);
+          } else if (error?.code === "NETWORK_ERROR" || !error?.response) {
+            showErrorToast("네트워크 연결을 확인해주세요.");
           } else {
             showErrorToast("검사 요청에 실패했습니다.");
           }
@@ -80,11 +95,11 @@ export default function InspectionForm({
       )}
       <Input
         type='text'
-        name='summary'
+        name='description'
         label='서비스 명'
         placeholder='서비스 명을 작성해주세요'
         register={register}
-        error={errors.summary}
+        error={errors.description}
       />
       <Input
         type='text'

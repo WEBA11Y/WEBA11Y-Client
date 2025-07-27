@@ -1,6 +1,6 @@
 export type HistoryListData = {
   id: number;
-  summary: string;
+  description: string;
   createDate: string;
   favicon: string;
 };
@@ -12,7 +12,18 @@ export type HistoryListProps = {
 };
 
 export type UrlData = {
-  summary: string;
+  description: string;
   url: string;
   parentId: number | null;
 };
+
+export interface UrlDetail {
+  id: number;
+  description: string;
+  url: string;
+  favicon: string;
+  parentId: number | null;
+  child: UrlDetail[];
+  createDate: string;
+  updateDate: string;
+}

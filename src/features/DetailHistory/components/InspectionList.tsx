@@ -3,6 +3,7 @@ import { styled } from "styled-components";
 
 import DropshadowCard from "../../../components/DropshadowCard";
 import StatusTab from "./StatusTab";
+import Select from "../../../components/Select";
 
 interface Issue {
   id: number;
@@ -19,12 +20,24 @@ const issues: Issue[] = Array(6)
       "주요 CSS가 <HEAD> 태그에 인라인으로 삽입되지 않았습니다. 이는 페이지 초기 로딩 속도를 저하시킬 수 있습니다.",
   }));
 
+const fetchCategory = async () => {
+  return [
+    { label: "중요도", value: "중요도" },
+    { label: "단계", value: "단계" },
+  ];
+};
+
 export default function InspectionList() {
   const [selectedTab, setSelectedTab] = useState("검토");
   console.log(selectedTab);
   return (
     <DropshadowCard dropshadow>
       <Container>
+        <Select
+          name='결과분류'
+          placeholder='상태'
+          fetchOptions={fetchCategory}
+        />
         <StatusTab onSelect={setSelectedTab} />
         <ListContainer>
           {issues.map((issue) => (

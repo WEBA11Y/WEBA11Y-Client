@@ -11,6 +11,7 @@ import HistoryPage from "../pages/HistoryPage";
 import DetailHistoryPage from "../pages/DetailHistoryPage";
 import DashboardPage from "../pages/DashboardPage";
 import { PATH } from "../constants/path";
+import StreamHistoryPage from "../pages/StreamHistoryPage";
 
 const router = createBrowserRouter([
   {
@@ -62,6 +63,16 @@ const router = createBrowserRouter([
           {
             path: "",
             element: <DashboardPage />,
+          },
+        ],
+      },
+      {
+        path: PATH.STREAM,
+        element: <ContentLayout />,
+        children: [
+          {
+            path: "",
+            element: <StreamHistoryPage />,
           },
         ],
       },

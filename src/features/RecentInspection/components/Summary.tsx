@@ -1,12 +1,16 @@
 import { styled } from "styled-components";
 import { BsBoxArrowUpRight } from "react-icons/bs";
+import { Link } from "react-router";
 
 import DropshadowCard from "../../../components/DropshadowCard";
 import Button from "../../../components/Button";
 import Typography from "../../../components/Typography";
 import StatBox from "./StatBox";
+import { PATH } from "../../../constants/path";
 
 export default function Summary() {
+  const id = 30;
+  const service = "https://github.com/";
   return (
     <DropshadowCard dropshadow>
       <Container>
@@ -20,22 +24,30 @@ export default function Summary() {
               <Title variant='title' size='xs'>
                 웹접근성 서비스
               </Title>
-              <Link variant='text' size='mdRegular'>
+
+              <Link to={service} target='_blank'>
                 서비스 링크 <BsBoxArrowUpRight />
               </Link>
             </ServiceInfo>
           </ServiceContainer>
           <DetailButton>
-            <Button variant='darkFill' type='button'>
-              상세보기
-            </Button>
+            <Link to={`${PATH.HISTORY}/${id}`}>
+              <Button variant='darkFill' type='button'>
+                상세보기
+              </Button>
+            </Link>
           </DetailButton>
         </Header>
         <StatsContainer>
-          <StatBox title='실패' value={1} color='red' showIcon='failure' />
-          <StatBox title='검토' value={2} color='yellow' showIcon='review' />
           <StatBox
-            title='권장'
+            title='총 위반 갯수'
+            value={1}
+            color='red'
+            showIcon='failure'
+          />
+          <StatBox title='미수정' value={2} color='yellow' showIcon='review' />
+          <StatBox
+            title='수정완료'
             value={3}
             color='blue'
             showIcon='recommoendation'
@@ -73,17 +85,6 @@ const ServiceContainer = styled.div`
 const ServiceInfo = styled.div``;
 
 const Title = styled(Typography)``;
-
-const Link = styled(Typography)`
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  color: ${({ theme }) => theme.colors.neutral[600]};
-  svg {
-    font-size: 14px;
-    transform: translateY(-2px);
-  }
-`;
 
 const DetailButton = styled.button``;
 

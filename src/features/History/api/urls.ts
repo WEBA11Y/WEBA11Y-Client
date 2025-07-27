@@ -29,3 +29,11 @@ export const testUrls = async (urlId: number) => {
   const response = await httpClient.post(`/api/v1/urls?urlId=${urlId}`);
   return response.data.id;
 };
+
+export const updateUrl = async (
+  id: number,
+  body: { description: string; parentId: number; url: string }
+) => {
+  const response = await httpClient.put(`/api/v1/urls/${id}`, body);
+  return response.data;
+};

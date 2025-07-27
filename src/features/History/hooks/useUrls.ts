@@ -7,8 +7,9 @@ import {
   getUrls,
   registerUrls,
   testUrls,
+  updateUrl,
 } from "../api/urls";
-import { HistoryListProps, UrlData } from "../types/HistoryList";
+import { HistoryListProps, UrlData, UrlDetail } from "../types/HistoryList";
 
 export const useUrls = () => {
   const queryClient = useQueryClient();
@@ -23,7 +24,7 @@ export const useUrls = () => {
       select: (data: HistoryListProps) => ({
         content: data.content.map((item) => ({
           id: item.id,
-          summary: item.summary,
+          description: item.description,
           createDate: item.createDate,
           favicon: item.favicon,
         })),
@@ -66,11 +67,34 @@ export const useUrls = () => {
     });
   };
 
+  const useUpdateUrl = () => {
+    return useMutation({
+      mutationFn: ({
+        id,
+        data,
+      }: {
+        id: number;
+        data: { description: string; parentId: number; url: string };
+      }) => updateUrl(id, data),
+
+      onSuccess: (_, { id, data }) => {
+        queryClient.setQueryData<UrlDetail>(["url", id], (old) => {
+          if (!old) return old;
+          return {
+            ...old,
+            description: data.description,
+          };
+        });
+      },
+    });
+  };
+
   return {
     useUserUrls,
     useUrlDetails,
     useRegisterUrl,
     useDeleteUrl,
     useUrlTest,
+    useUpdateUrl,
   };
 };
