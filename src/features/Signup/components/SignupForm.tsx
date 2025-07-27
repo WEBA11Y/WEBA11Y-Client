@@ -61,6 +61,7 @@ export default function SignupForm() {
       { value: userId, type: "userId" },
       {
         onSuccess: () => {
+          console.log("성공");
           clearErrors("userId");
           setIsUserIdChecked(true);
         },

@@ -23,7 +23,7 @@ export default function InspectionForm({
   getValues,
 }: InspectionFormProps) {
   const [isDuplicateModalOpen, setIsDuplicateModalOpen] = useState(false);
-
+  const [urlId, setUrlId] = useState(0);
   const navigate = useNavigate();
 
   const { useRegisterUrl } = useUrls();
@@ -59,6 +59,10 @@ export default function InspectionForm({
           if (error?.response?.status === 400) {
             showErrorToast("URL 형식이 올바르지 않습니다.");
           } else if (error?.response?.status === 409) {
+            // Q.error 값에서 데이터를 가지고 와도 되는건가?
+            const data = error.response.data as { urlId: number };
+            setUrlId(data.urlId);
+
             setIsDuplicateModalOpen(true);
           } else if (error?.code === "NETWORK_ERROR" || !error?.response) {
             showErrorToast("네트워크 연결을 확인해주세요.");
@@ -79,8 +83,14 @@ export default function InspectionForm({
     >
       {isDuplicateModalOpen && (
         <DuplicateModal
-          onReInspect={() => setIsDuplicateModalOpen(false)}
-          onGoToDetailPage={() => setIsDuplicateModalOpen(false)}
+          onReInspect={() => {
+            handleSubmit();
+            setIsDuplicateModalOpen(false);
+          }}
+          onGoToDetailPage={() => {
+            navigate(`/history/${urlId}`);
+            setIsDuplicateModalOpen(false);
+          }}
         />
       )}
       <Input

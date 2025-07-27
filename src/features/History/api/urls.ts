@@ -3,6 +3,7 @@ import { UrlData } from "../types/HistoryList";
 
 export const registerUrls = async (urlData: UrlData) => {
   const response = await httpClient.post("/api/v1/urls", urlData);
+
   return response.data.id;
 };
 
